@@ -1,16 +1,10 @@
-"""
-Django settings for spirit project on Heroku. Fore more info, see:
-https://github.com/heroku/heroku-django-template
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.9/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.9/ref/settings/
-
-
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import os
+import sys
 import dj_database_url
+
+from spirit.settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,13 +15,45 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "0%2#^9e3&acu3r*m+-+1*vjf)l&0xoiaruxy#=+7!4xoikzcng"
+SECRET_KEY = "hf0x^6q!)z%%blce^ru%h&e8=9amit=yil1wx%sz&b9$1cw_0("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# This will be the default in next version
+ST_RATELIMIT_CACHE = 'st_rate_limit'
+
+
+# Extend the Spirit installed apps.
+# Check out the spirit.settings.py so you do not end up with duplicated apps.
+INSTALLED_APPS.extend([
+    # 'my_app1',
+    # 'my_app2',
+])
+
+# same here, check out the spirit.settings.py
+MIDDLEWARE_CLASSES.extend([
+    # 'my_middleware1',
+    # 'my_middleware2',
+])
+
+# same here
+TEMPLATES[0]['OPTIONS']['context_processors'].extend([
+    # 'my_template_proc1',
+    # 'my_template_proc2',
+])
+
+# same here (we update the Spirit caches)
+CACHES.update({
+    # 'default': {
+    #   'BACKEND': 'my.backend.path',
+    # },
+})
+
+ST_COMMENT_MAX_LEN = 3000
 # Application definition
 
+"""
 INSTALLED_APPS = (
 	'django.contrib.admin',
 	'django.contrib.auth',
@@ -35,8 +61,6 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-
-	#app del proyecto
 	'spirit',
 )
 
@@ -50,9 +74,10 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	'django.middleware.security.SecurityMiddleware',
 )
+"""
+ROOT_URLCONF = 'webspirit.urls'
 
-ROOT_URLCONF = 'spirit.urls'
-
+"""
 TEMPLATES = (
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -68,14 +93,15 @@ TEMPLATES = (
 			'debug': DEBUG,
 		},
 	},
-)
+)"""
 
-WSGI_APPLICATION = 'spirit.wsgi.application'
+WSGI_APPLICATION = 'webspirit.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+"""
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.sqlite3',
@@ -85,15 +111,15 @@ DATABASES = {
 """
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': 'd40us2nkqf21mg',
-		'USER': 'mhdcetivfzhrgh',
-		'PASSWORD': '8_x-FlcgWW12enE9nbXU5LYP82',
-		'HOST': 'ec2-54-235-85-65.compute-1.amazonaws.com',
+		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'NAME': 'd1oitk3ih8b8ps',
+		'USER': 'huukhwhjqfimaf',
+		'PASSWORD': '0_wUgKoN2zfJreReGY0frXpDwX',
+		'HOST': 'ec2-54-243-249-154.compute-1.amazonaws.com',
 		'PORT': '5432',
 	}
 }
-"""
+
 
 AUTH_PASSWORD_VALIDATORS = (
 	{
@@ -152,8 +178,54 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-##  CKEDITOR CONFIGHURACIONES ##
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_IMAGE_BACKEND = "pillow"
-CKEDITOR_JQUERY_URL = 'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+# Send an email to the site admins
+# on error when DEBUG=False,
+# log to console on error always.
+"""LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'filters': {
+		'require_debug_false': {
+			'()': 'django.utils.log.RequireDebugFalse'
+		}
+	},
+	'handlers': {
+		'mail_admins': {
+			'class': 'django.utils.log.AdminEmailHandler',
+			'filters': ['require_debug_false'],
+		},
+		'console': {
+			'class': 'logging.StreamHandler',
+		},
+		'file': {
+			'class': 'logging.FileHandler',
+			'filename': os.path.join(BASE_DIR, 'django.log'),
+		},
+	},
+	'loggers': {
+		'': {
+			'handlers': ['console', 'mail_admins'],
+			'level': 'ERROR',
+			'propagate': False,
+		},
+		'django': {
+			'handlers': ['console', 'mail_admins'],
+			'level': 'ERROR',
+			'propagate': False,
+		},
+	}
+}
 """
+"""
+# https://docs.djangoproject.com/en/dev/ref/settings/#admins
+ADMINS = (('John', 'john@example.com'), )
+
+# You can change this to something like 'MyForum <noreply@example.com>'
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'  # Django default
+SERVER_EMAIL = DEFAULT_FROM_EMAIL  # For error notifications
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+"""
+
+

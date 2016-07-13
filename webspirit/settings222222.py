@@ -1,5 +1,14 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+"""
+Django settings for spirit project on Heroku. Fore more info, see:
+https://github.com/heroku/heroku-django-template
+
+For more information on this file, see
+https://docs.djangoproject.com/en/1.9/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/1.9/ref/settings/
+
+
 import os
 import dj_database_url
 
@@ -11,30 +20,27 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-SECRET_KEY = "dlyx@szqp!3b=7@vd!$e7%x((lp0^-8(fv0wphugagz))+5q%_"
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = "0%2#^9e3&acu3r*m+-+1*vjf)l&0xoiaruxy#=+7!4xoikzcng"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #True
+DEBUG = True
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = (
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
-	# Disable Django's own staticfiles handling in favour of WhiteNoise, for
-	# greater consistency between gunicorn and `./manage.py runserver`. See:
-	# http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
-	'whitenoise.runserver_nostatic',
 	'django.contrib.staticfiles',
-	'spirit',
-]
 
-MIDDLEWARE_CLASSES = [
-	'django.middleware.security.SecurityMiddleware',
-	'whitenoise.middleware.WhiteNoiseMiddleware',
+	#app del proyecto
+	'spirit',
+)
+
+MIDDLEWARE_CLASSES = (
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
@@ -42,14 +48,15 @@ MIDDLEWARE_CLASSES = [
 	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+	'django.middleware.security.SecurityMiddleware',
+)
 
-ROOT_URLCONF = 'webspirit.urls'
+ROOT_URLCONF = 'spirit.urls'
 
-TEMPLATES = [
+TEMPLATES = (
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [],
+		'DIRS': [os.path.join(BASE_DIR, 'templates')],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -61,9 +68,9 @@ TEMPLATES = [
 			'debug': DEBUG,
 		},
 	},
-]
+)
 
-WSGI_APPLICATION = 'webspirit.wsgi.application'
+WSGI_APPLICATION = 'spirit.wsgi.application'
 
 
 # Database
@@ -71,16 +78,24 @@ WSGI_APPLICATION = 'webspirit.wsgi.application'
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'd1oitk3ih8b8ps',
-		'USER': 'huukhwhjqfimaf',
-		'PASSWORD': '0_wUgKoN2zfJreReGY0frXpDwX',
-		'HOST': 'ec2-54-243-249-154.compute-1.amazonaws.com',
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	}
+}
+"""
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.postgresql',
+		'NAME': 'd40us2nkqf21mg',
+		'USER': 'mhdcetivfzhrgh',
+		'PASSWORD': '8_x-FlcgWW12enE9nbXU5LYP82',
+		'HOST': 'ec2-54-235-85-65.compute-1.amazonaws.com',
 		'PORT': '5432',
 	}
 }
+"""
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = (
 	{
 		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
 	},
@@ -93,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 	{
 		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 	},
-]
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -108,6 +123,8 @@ USE_TZ = True
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
+
+
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -117,55 +134,26 @@ ALLOWED_HOSTS = ['*']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
-	os.path.join(PROJECT_ROOT, 'static'),
+	os.path.join(BASE_DIR, 'static'),
 ]
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-
-# Application definition
-
-# This will be the default in next version
-ST_RATELIMIT_CACHE = 'st_rate_limit'
-
-# Extend the Spirit installed apps.
-# Check out the spirit.settings.py so you do not end up with duplicated apps.
-INSTALLED_APPS.extend([
-	# 'my_app1',
-	# 'my_app2',
-])
-
-# same here, check out the spirit.settings.py
-MIDDLEWARE_CLASSES.extend([
-	# 'my_middleware1',
-	# 'my_middleware2',
-])
-
-# same here
-TEMPLATES[0]['OPTIONS']['context_processors'].extend([
-	# 'my_template_proc1',
-	# 'my_template_proc2',
-])
-
-# same here (we update the Spirit caches)
-CACHES.update({
-	# 'default': {
-	#   'BACKEND': 'my.backend.path',
-	# },
-})
+##  CKEDITOR CONFIGHURACIONES ##
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = 'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+"""

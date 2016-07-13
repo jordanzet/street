@@ -3,3 +3,11 @@ Django==1.8
 gunicorn==19.6.0
 psycopg2==2.6.1
 whitenoise==3.2
+django-haystack
+whoosh
+mistune
+Pillow
+django-infinite-scroll-pagination
+django-djconfig
+unicode-slugify
+pytz

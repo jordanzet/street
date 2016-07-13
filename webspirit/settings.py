@@ -27,27 +27,29 @@ ST_RATELIMIT_CACHE = 'st_rate_limit'
 # Extend the Spirit installed apps.
 # Check out the spirit.settings.py so you do not end up with duplicated apps.
 INSTALLED_APPS.extend([
-    # 'my_app1',
-    # 'my_app2',
+	# 'my_app1',
+	# 'my_app2',
 ])
 
 # same here, check out the spirit.settings.py
 MIDDLEWARE_CLASSES.extend([
-    # 'my_middleware1',
-    # 'my_middleware2',
+	# 'my_middleware1',
+	# 'my_middleware2',
 ])
 
 # same here
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
-    # 'my_template_proc1',
-    # 'my_template_proc2',
+	# 'my_template_proc1',
+	# 'my_template_proc2',
 ])
 
 # same here (we update the Spirit caches)
 CACHES.update({
-    # 'default': {
-    #   'BACKEND': 'my.backend.path',
-    # },
+	'st_rate_limit': {
+		'BACKEND': CACHES['default']['BACKEND'],
+		'LOCATION': 'spirit_rl_cache',
+		'TIMEOUT': None
+	}
 })
 
 ST_COMMENT_MAX_LEN = 3000

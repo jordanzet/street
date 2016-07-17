@@ -231,3 +231,19 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL  # For error notifications
 """
 
 
+CACHES.update({
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'st_rate_limit': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'spirit_rl_cache',
+        'TIMEOUT': None
+    }
+})
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

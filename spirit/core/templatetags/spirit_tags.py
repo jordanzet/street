@@ -20,20 +20,20 @@ from ..tags.registry import register
 
 
 __all__ = [
-    'comment',
-    'comment_like',
-    'comment_poll',
-    'topic_poll',
-    'search',
-    'topic_favorite',
-    'topic_notification',
-    'topic_private',
-    'avatar',
-    'gravatar',
-    'messages',
-    'paginator',
-    'social_share',
-    'time',
-    'urls',
-    'register'
+	'comment',
+	'comment_like',
+	'comment_poll',
+	'topic_poll',
+	'search',
+	'topic_favorite',
+	'topic_notification',
+	'topic_private',
+	'avatar',
+	'gravatar',
+	'messages',
+	'paginator',
+	'social_share',
+	'time',
+	'urls',
+	'register'
 ]

@@ -16,7 +16,7 @@ def render_comments_form(topic, next=None):
     form = CommentForm()
     return {'form': form, 'topic_id': topic.pk, 'next': next}
 
-
+ 
 @register.simple_tag()
 def get_comment_action_text(action):
     if action == MOVED:

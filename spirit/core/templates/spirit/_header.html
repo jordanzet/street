@@ -1,44 +1,85 @@
 {% load spirit_tags i18n %}
+<div id="header" class="header navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="{% url "spirit:index" %}" class="navbar-brand">
+				<span class="navbar-logo"></span>
+				<span class="brand-text">Street Politicians</span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="header-navbar">
+			{% if user.is_authenticated %}
+				{% has_topic_notifications user as has_notifications %}
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a data-toggle="dropdown" href="{% url "spirit:topic:notification:index" %}"> <i class="fa fa-bell"></i> </a>
+						<div class="status green">&nbsp;</div>
+						<ul class="dropdown-menu" role="menu">							
+							{% for n in notifications %}
+								<div class="col-md-12">	
+								
+								{% url "spirit:user:detail" pk=n.comment.user.pk slug=n.comment.user.st.slug as url_profile %}
+								{% url "spirit:comment:find" pk=n.comment.pk as url_topic %}
 
-    <header class="header js-tabs-container">
-		<a class="header-logo" href="{% url "spirit:index" %}">Street Politicians</a>
+								{% if n.is_comment %}
+									{% blocktrans trimmed with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has commented on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
+								{% elif n.is_mention %}
+									{% blocktrans trimmed with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %}
+								{% else %}
+									Unknow action
+								{% endif %}
 
-        {% if user.is_authenticated %}
-            {% has_topic_notifications user as has_notifications %}
+								{% if not n.is_read %}
+									<span class="row-unread">{% trans "unread" %}</span>
+								{% endif %}
+								</div>
+								<hr>
+							
+							{% empty %}
+								<p>No hay notificaciones</p>
+							{% endfor %}
 
-            <ul class="header-tabs">
-                <li><a class="header-tab-link js-tab" href="{% url "spirit:search:search" %}" data-related=".js-search-content"><i class="fa fa-search"></i></a></li><!--
-             --><li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"><i class="fa fa-bell"></i></a></li><!--
-             --><li><a class="header-tab-link js-tab" href="{% url "spirit:user:menu" %}" data-related=".js-user-content">{{ user.username }} <i class="fa fa-chevron-down"></i></a></li>
-            </ul>
+							
+						</ul>
+					</li>
 
-            <div class="header-tabs-content">
+					<li class="dropdown">
+						{% render_search_form %}
+					</li>
 
-                <div class="header-tab-content js-tab-content js-user-content">
-                    <nav class="header-nav">
-                        <ul class="menu">
-                            <li><a class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">{% trans "Profile" %}</a></li>
-                            <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}">{% trans "Topics" %}</a></li>
-                            <li><a class="menu-link" href="{% url "spirit:topic:unread:index" %}">{% trans "Unread topics" %}</a></li>
-                            <li><a class="menu-link" href="{% url "spirit:topic:private:index" %}">{% trans "Private topics" %}</a></li>
+					<li class="avatar pull-left dropdown">
+						<a data-toggle="dropdown" href="#"><img src="images/avatar.jpg" alt=""/> {{ user.username }}</a>
+						<div class="status green">&nbsp;</div>
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">Perfil</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-2" href="{% url "spirit:topic:index-active" %}">Temas</a></li>
 
-                            {% if user.st.is_administrator %}
-                                <li><a class="menu-link" href="{% url "spirit:admin:index" %}">{% trans "Admin" %}</a></li>
-                            {% endif %}
+							<li role="presentation"><a role="menuitem" tabindex="-3" href="{% url "spirit:topic:unread:index" %}">Temas no Leidos</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-4" href="{% url "spirit:topic:private:index" %}">Temas Privados</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-5" href="{% url "spirit:search:search" %}" ><i class="fa fa-search"> Busqueda Avanzada</i></a></li>
 
-                            <li><a class="menu-link js-post" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log out" %}</a></li>
-                        </ul>
-                    </nav>
-                </div>
+							{% if user.st.is_administrator %}
+							<li role="presentation"><a role="menuitem" tabindex="-6" href="{% url "spirit:admin:index" %}">Admin</a></li>
+							{% endif %}
 
-                <div class="header-tab-content js-tab-content js-notifications-content"></div>
-
-                <div class="header-tab-content js-tab-content js-search-content">
-                    {% render_search_form %}
-                </div>
-
-            </div>
-        {% else %}
-            <a class="header-link" href="{% url "spirit:user:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log in" %}</a>
-        {% endif %}
-	</header>
+							<li role="presentation"><a role="menuitem" tabindex="-7" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">Cerrar Sesión</a></li>
+						</ul>
+					</li>
+				</ul>
+			{% else %}
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						{% render_search_form %}
+					</li>
+					<li><a href="#">Crear una Cuenta</a></li>
+					<li><a href="{% url "spirit:user:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">Iniciar Sesión</a></li>
+				</ul>
+			{% endif %}
+		</div>
+	</div>
+</div>

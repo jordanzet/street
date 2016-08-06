@@ -120,7 +120,7 @@ def find(request, pk):
                             config.comments_per_page,
                             'page')
     return redirect(url)
-
+ 
 
 @require_POST
 @login_required

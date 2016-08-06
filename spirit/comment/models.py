@@ -11,7 +11,6 @@ from django.utils import timezone
 
 from .managers import CommentQuerySet
 
-
 COMMENT, MOVED, CLOSED, UNCLOSED, PINNED, UNPINNED = range(6)
 
 ACTION = (
@@ -23,20 +22,22 @@ ACTION = (
 	(UNPINNED, _("topic unpinned")),
 )
 
+DUAL = (
+    ('AGREE', 'de acuerdo'),
+    ('DISAGREE', 'en desacuerdo'),
+)
 
 class Comment(models.Model):
-
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_comments')
 	topic = models.ForeignKey('spirit_topic.Topic')
-
 	comment = models.TextField(_("comment"))
+	dual = models.CharField(choices= DUAL, max_length=12)
 	comment_html = models.TextField(_("comment html"))
 	action = models.IntegerField(_("action"), choices=ACTION, default=COMMENT)
 	date = models.DateTimeField(default=timezone.now)
 	is_removed = models.BooleanField(default=False)
 	is_modified = models.BooleanField(default=False)
 	ip_address = models.GenericIPAddressField(blank=True, null=True)
-
 	modified_count = models.PositiveIntegerField(_("modified count"), default=0)
 	likes_count = models.PositiveIntegerField(_("likes count"), default=0)
 

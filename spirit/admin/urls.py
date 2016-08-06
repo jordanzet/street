@@ -13,11 +13,10 @@ import spirit.user.admin.urls
 
 urlpatterns = [
     url(r'^$', views.dashboard, name='index'),
-    url(r'^dashboard/$', views.dashboard, name='dashboard'),
-    url(r'^config/$', views.config_basic, name='config-basic'),
-
-    url(r'^category/', include(spirit.category.admin.urls, namespace='category')),
-    url(r'^comment/flag/', include(spirit.comment.flag.admin.urls, namespace='flag')),
-    url(r'^topic/', include(spirit.topic.admin.urls, namespace='topic')),
-    url(r'^user/', include(spirit.user.admin.urls, namespace='user')),
+    url(r'^panel/$', views.dashboard, name='dashboard'),
+    url(r'^configuracion/$', views.config_basic, name='config-basic'),
+    url(r'^categoria/', include(spirit.category.admin.urls, namespace='category')),
+    url(r'^comentario/bandera/', include(spirit.comment.flag.admin.urls, namespace='flag')),
+    url(r'^tema/', include(spirit.topic.admin.urls, namespace='topic')),
+    url(r'^usuario/', include(spirit.user.admin.urls, namespace='user')),
 ]

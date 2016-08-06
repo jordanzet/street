@@ -16,59 +16,59 @@ from ..category.models import Category
 
 class BaseSearchForm(SearchForm):
 
-    def clean_q(self):
-        q = self.cleaned_data['q']
+	def clean_q(self):
+		q = self.cleaned_data['q']
 
-        if len(q) < settings.ST_SEARCH_QUERY_MIN_LEN:
-            raise forms.ValidationError(
-                _("Your search must contain at "
-                  "least %(length)s characters.") % {
-                    'length': settings.ST_SEARCH_QUERY_MIN_LEN})
+		if len(q) < settings.ST_SEARCH_QUERY_MIN_LEN:
+			raise forms.ValidationError(
+				_("Your search must contain at "
+				  "least %(length)s characters.") % {
+					'length': settings.ST_SEARCH_QUERY_MIN_LEN})
 
-        return q
+		return q
 
 
 class BasicSearchForm(BaseSearchForm):
 
-    def search(self):
-        sqs = super(BasicSearchForm, self).search()
+	def search(self):
+		sqs = super(BasicSearchForm, self).search()
 
-        if isinstance(sqs, EmptySearchQuerySet):
-            return sqs
+		if isinstance(sqs, EmptySearchQuerySet):
+			return sqs
 
-        topics = sqs.models(Topic)
+		topics = sqs.models(Topic)
 
-        # See: haystack pull #1141 and #1093
-        # querying False won't work on elastic
-        return topics.filter(is_removed=0)
+		# See: haystack pull #1141 and #1093
+		# querying False won't work on elastic
+		return topics.filter(is_removed=0)
 
 
 class AdvancedSearchForm(BaseSearchForm):
 
-    category = forms.ModelMultipleChoiceField(
-        queryset=Category.objects.visible(),
-        required=False,
-        label=_('Filter by'),
-        widget=forms.CheckboxSelectMultiple)
+	category = forms.ModelMultipleChoiceField(
+		queryset=Category.objects.visible(),
+		required=False,
+		label=_('Filter by'),
+		widget=forms.CheckboxSelectMultiple)
 
-    def __init__(self, *args, **kwargs):
-        super(AdvancedSearchForm, self).__init__(*args, **kwargs)
-        self.fields['category'].label_from_instance = (
-            lambda obj: smart_text(obj.title))
+	def __init__(self, *args, **kwargs):
+		super(AdvancedSearchForm, self).__init__(*args, **kwargs)
+		self.fields['category'].label_from_instance = (
+			lambda obj: smart_text(obj.title))
 
-    def search(self):
-        sqs = super(AdvancedSearchForm, self).search()
+	def search(self):
+		sqs = super(AdvancedSearchForm, self).search()
 
-        if isinstance(sqs, EmptySearchQuerySet):
-            return sqs
+		if isinstance(sqs, EmptySearchQuerySet):
+			return sqs
 
-        topics = sqs.models(Topic)
-        categories = self.cleaned_data['category']
+		topics = sqs.models(Topic)
+		categories = self.cleaned_data['category']
 
-        if categories:
-            topics = topics.filter(
-                category_id__in=[c.pk for c in categories])
+		if categories:
+			topics = topics.filter(
+				category_id__in=[c.pk for c in categories])
 
-        # See: haystack pull #1141 and #1093
-        # querying False won't work on elastic
-        return topics.filter(is_removed=0)
+		# See: haystack pull #1141 and #1093
+		# querying False won't work on elastic
+		return topics.filter(is_removed=0)

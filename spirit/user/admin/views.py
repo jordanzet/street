@@ -18,67 +18,67 @@ User = get_user_model()
 
 @administrator_required
 def edit(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+	user = get_object_or_404(User, pk=user_id)
 
-    if request.method == 'POST':
-        uform = UserForm(data=request.POST, instance=user)
-        form = UserProfileForm(data=request.POST, instance=user.st)
+	if request.method == 'POST':
+		uform = UserForm(data=request.POST, instance=user)
+		form = UserProfileForm(data=request.POST, instance=user.st)
 
-        if all([uform.is_valid(), form.is_valid()]):
-            uform.save()
-            form.save()
-            messages.info(request, _("This profile has been updated!"))
-            return redirect(request.GET.get("next", request.get_full_path()))
-    else:
-        uform = UserForm(instance=user)
-        form = UserProfileForm(instance=user.st)
+		if all([uform.is_valid(), form.is_valid()]):
+			uform.save()
+			form.save()
+			messages.info(request, _("This profile has been updated!"))
+			return redirect(request.GET.get("next", request.get_full_path()))
+	else:
+		uform = UserForm(instance=user)
+		form = UserProfileForm(instance=user.st)
 
-    context = {
-        'form': form,
-        'uform': uform
-    }
+	context = {
+		'form': form,
+		'uform': uform
+	}
 
-    return render(request, 'spirit/user/admin/edit.html', context)
+	return render(request, 'spirit/user/admin/edit.html', context)
 
 
 @administrator_required
 def _index(request, queryset, template):
-    users = yt_paginate(
-        queryset.order_by('-date_joined', '-pk'),
-        per_page=config.topics_per_page,
-        page_number=request.GET.get('page', 1)
-    )
-    context = {'users': users, }
-    return render(request, template, context)
+	users = yt_paginate(
+		queryset.order_by('-date_joined', '-pk'),
+		per_page=config.topics_per_page,
+		page_number=request.GET.get('page', 1)
+	)
+	context = {'users': users, }
+	return render(request, template, context)
 
 
 def index(request):
-    return _index(
-        request,
-        queryset=User.objects.all(),
-        template='spirit/user/admin/index.html'
-    )
+	return _index(
+		request,
+		queryset=User.objects.all(),
+		template='spirit/user/admin/index.html'
+	)
 
 
 def index_admins(request):
-    return _index(
-        request,
-        queryset=User.objects.filter(st__is_administrator=True),
-        template='spirit/user/admin/admins.html'
-    )
+	return _index(
+		request,
+		queryset=User.objects.filter(st__is_administrator=True),
+		template='spirit/user/admin/admins.html'
+	)
 
 
 def index_mods(request):
-    return _index(
-        request,
-        queryset=User.objects.filter(st__is_moderator=True, st__is_administrator=False),
-        template='spirit/user/admin/mods.html'
-    )
+	return _index(
+		request,
+		queryset=User.objects.filter(st__is_moderator=True, st__is_administrator=False),
+		template='spirit/user/admin/mods.html'
+	)
 
 
 def index_unactive(request):
-    return _index(
-        request,
-        queryset=User.objects.filter(is_active=False),
-        template='spirit/user/admin/unactive.html'
-    )
+	return _index(
+		request,
+		queryset=User.objects.filter(is_active=False),
+		template='spirit/user/admin/unactive.html'
+	)

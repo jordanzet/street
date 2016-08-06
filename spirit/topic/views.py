@@ -23,113 +23,127 @@ from . import utils
 @login_required
 @ratelimit(rate='1/10s')
 def publish(request, category_id=None):
-    if category_id:
-        get_object_or_404(
-            Category.objects.visible(),
-            pk=category_id)
+	if category_id:
+		get_object_or_404(
+			Category.objects.visible(),
+			pk=category_id)
 
-    user = request.user
+	user = request.user
 
-    if request.method == 'POST':
-        form = TopicForm(user=user, data=request.POST)
-        cform = CommentForm(user=user, data=request.POST)
+	if request.method == 'POST':
+		form = TopicForm(user=user, data=request.POST)
+		cform = CommentForm(user=user, data=request.POST)
 
-        if (all([form.is_valid(), cform.is_valid()]) and
-                not request.is_limited()):
-            if not user.st.update_post_hash(form.get_topic_hash()):
-                return redirect(
-                    request.POST.get('next', None) or
-                    form.get_category().get_absolute_url())
+		if (all([form.is_valid(), cform.is_valid()]) and
+				not request.is_limited()):
+			if not user.st.update_post_hash(form.get_topic_hash()):
+				return redirect(
+					request.POST.get('next', None) or
+					form.get_category().get_absolute_url())
 
-            # wrap in transaction.atomic?
-            topic = form.save()
-            cform.topic = topic
-            comment = cform.save()
-            comment_posted(comment=comment, mentions=cform.mentions)
-            return redirect(topic.get_absolute_url())
-    else:
-        form = TopicForm(user=user, initial={'category': category_id})
-        cform = CommentForm()
+			# wrap in transaction.atomic?
+			topic = form.save()
+			cform.topic = topic
+			comment = cform.save()
+			comment_posted(comment=comment, mentions=cform.mentions)
+			return redirect(topic.get_absolute_url())
+	else:
+		form = TopicForm(user=user, initial={'category': category_id})
+		cform = CommentForm()
 
-    context = {
-        'form': form,
-        'cform': cform}
+	context = {
+		'form': form,
+		'cform': cform}
 
-    return render(request, 'spirit/topic/publish.html', context)
+	return render(request, 'spirit/topic/publish.html', context)
 
 
 @login_required
 def update(request, pk):
-    topic = Topic.objects.for_update_or_404(pk, request.user)
+	topic = Topic.objects.for_update_or_404(pk, request.user)
 
-    if request.method == 'POST':
-        form = TopicForm(user=request.user, data=request.POST, instance=topic)
-        category_id = topic.category_id
+	if request.method == 'POST':
+		form = TopicForm(user=request.user, data=request.POST, instance=topic)
+		category_id = topic.category_id
 
-        if form.is_valid():
-            topic = form.save()
+		if form.is_valid():
+			topic = form.save()
 
-            if topic.category_id != category_id:
-                Comment.create_moderation_action(user=request.user, topic=topic, action=MOVED)
+			if topic.category_id != category_id:
+				Comment.create_moderation_action(user=request.user, topic=topic, action=MOVED)
 
-            return redirect(request.POST.get('next', topic.get_absolute_url()))
-    else:
-        form = TopicForm(user=request.user, instance=topic)
+			return redirect(request.POST.get('next', topic.get_absolute_url()))
+	else:
+		form = TopicForm(user=request.user, instance=topic)
 
-    context = {'form': form, }
+	context = {'form': form, }
 
-    return render(request, 'spirit/topic/update.html', context)
+	return render(request, 'spirit/topic/update.html', context)
 
 
 def detail(request, pk, slug):
-    topic = Topic.objects.get_public_or_404(pk, request.user)
+	topic = Topic.objects.get_public_or_404(pk, request.user)
 
-    if topic.slug != slug:
-        return HttpResponsePermanentRedirect(topic.get_absolute_url())
+	if topic.slug != slug:
+		return HttpResponsePermanentRedirect(topic.get_absolute_url())
 
-    utils.topic_viewed(request=request, topic=topic)
+	utils.topic_viewed(request=request, topic=topic)
 
-    comments = Comment.objects\
-        .for_topic(topic=topic)\
-        .with_likes(user=request.user)\
-        .with_polls(user=request.user)\
-        .order_by('date')
+	comments = Comment.objects\
+		.for_topic(topic=topic)\
+		.with_likes(user=request.user)\
+		.with_polls(user=request.user)\
+		.order_by('-likes_count')
 
-    comments = paginate(
-        comments,
-        per_page=config.comments_per_page,
-        page_number=request.GET.get('page', 1)
-    )
+	commentsagree = Comment.objects\
+		.for_topic(topic=topic)\
+		.with_likes(user=request.user)\
+		.with_polls(user=request.user)\
+		.order_by('-likes_count').filter(dual="AGREE")
 
-    context = {
-        'topic': topic,
-        'comments': comments
-    }
+	commentsdesagree = Comment.objects\
+		.for_topic(topic=topic)\
+		.with_likes(user=request.user)\
+		.with_polls(user=request.user)\
+		.order_by('-likes_count').filter(dual="DISAGREE")
 
-    return render(request, 'spirit/topic/detail.html', context)
+	comments = paginate(
+		comments,
+		per_page=config.comments_per_page,
+		page_number=request.GET.get('page', 1)
+	)
+
+	context = {
+		'topic': topic,
+		'comments': comments,
+		'commentsagree': commentsagree,
+		'commentsdesagree': commentsdesagree
+	}
+
+	return render(request, 'spirit/topic/detail.html', context)
 
 
 def index_active(request):
-    categories = Category.objects\
-        .visible()\
-        .parents()
+	categories = Category.objects\
+		.visible()\
+		.parents()
 
-    topics = Topic.objects\
-        .visible()\
-        .global_()\
-        .with_bookmarks(user=request.user)\
-        .order_by('-is_globally_pinned', '-last_active')\
-        .select_related('category')
+	topics = Topic.objects\
+		.visible()\
+		.global_()\
+		.with_bookmarks(user=request.user)\
+		.order_by('-is_globally_pinned', '-last_active')\
+		.select_related('category')
 
-    topics = yt_paginate(
-        topics,
-        per_page=config.topics_per_page,
-        page_number=request.GET.get('page', 1)
-    )
+	topics = yt_paginate(
+		topics,
+		per_page=config.topics_per_page,
+		page_number=request.GET.get('page', 1)
+	)
 
-    context = {
-        'categories': categories,
-        'topics': topics
-    }
+	context = {
+		'categories': categories,
+		'topics': topics
+	}
 
-    return render(request, 'spirit/topic/active.html', context)
+	return render(request, 'spirit/topic/active.html', context)

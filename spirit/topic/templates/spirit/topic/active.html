@@ -6,10 +6,19 @@
 
 {% block content %}
 
-    {% include "spirit/topic/_top_bar.html" with category=None categories=categories %}
+    {% include "spirit/topic/_top_bar.html" with category=None categories=categories %} 
+	
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+				{% render_paginator topics %}
+				{% include "spirit/topic/_render_list.html" %}
+				{% render_paginator topics %}
+				</div>
+			</div>
+		</div>
+	</div>
 
-    {% include "spirit/topic/_render_list.html" %}
-
-    {% render_paginator topics %}
 
 {% endblock %}

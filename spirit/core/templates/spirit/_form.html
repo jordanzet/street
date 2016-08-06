@@ -4,14 +4,16 @@
 
 {% for field in form.hidden_fields %}
     {{ field.errors }}
-    {{ field }}
+    <!--{{ field }}-->
 {% endfor %}
 
 {% for field in form.visible_fields %}
-    <div class="field">
         {{ field.label_tag }}
         {{ field.errors }}
-        {{ field }}
         {{ field.help_text }}
-    </div>
+        {{ field }}
+        <!-- <input type="text" class="form-control" placeholder="Enter Keywords..." /> -->
+
 {% endfor %}
+
+

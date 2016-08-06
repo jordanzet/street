@@ -1,63 +1,87 @@
 {% load spirit_tags i18n %}
 {% load static from staticfiles %}
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="es" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="es">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block title %}{% endblock %} - {{ config.site_name }}</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta name="description" content="{{ config.site_description }}"/>
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="{% static "spirit/forum/plugins/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" />
+	<link href="{% static "spirit/forum/plugins/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" />
+	<link href="{% static "spirit/forum/css/animate.min.css" %}" rel="stylesheet" />
+	<link href="{% static "spirit/forum/css/style.min.css" %}" rel="stylesheet" />
+	<link href="{% static "spirit/forum/css/style-responsive.min.css" %}" rel="stylesheet" />
+	<link href="{% static "spirit/forum/css/theme/default.css" %}" id="theme" rel="stylesheet" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static "spirit/forum/plugins/pace/pace.min.js" %}"></script>
+	<!-- ================== END BASE JS ================== -->
 
-    <title>{% block title %}{% endblock %} - {{ config.site_name }}</title>
-    <meta name="description" content="{{ config.site_description }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- codio de plantilla antigua -->
+	<!--<link rel="stylesheet" href="{% static "spirit/stylesheets/styles.all.min.css" %}">
+	<script src="{% static "spirit/scripts/all.min.js" %}"></script>
+		<script>
+		$( document ).ready(function() {
 
-    <link rel="stylesheet" href="{% static "spirit/stylesheets/styles.all.min.css" %}">
+			$.tab();
 
-    <script src="{% static "spirit/scripts/all.min.js" %}"></script>
+			$( 'a.js-post' ).postify( {
+				csrfToken: "{{ csrf_token }}",
+			} );
 
-    <script>
+			$('.js-messages').messages();
 
-	$( document ).ready(function() {
+			{% if user.is_authenticated %}
+				$.notification( {
+					notificationUrl: "{% url "spirit:topic:notification:index-ajax" %}",
+					notificationListUrl: "{% url "spirit:topic:notification:index-unread" %}",
+					mentionTxt: "{% trans "{user} has mention you on {topic}" %}",
+					commentTxt: "{% trans "{user} has commented on {topic}" %}",
+					showAll: "{% trans "Show all" %}",
+					empty: "{% trans "No new notifications, yet" %}",
+					unread: "{% trans "unread" %}",
+				} );
+			{% endif %}
+		});
+		</script>
+		{% block head-extra %}{% endblock %}-->
+		<!--[if (lt IE 9) & (!IEMobile)]>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+		<![endif]-->
+</head> 
+<body>
 
-        $.tab();
+	{% include 'spirit/_header.html' %}
+		{% render_messages messages %}
+		{% block content %}{% endblock %}
 
-        $( 'a.js-post' ).postify( {
-            csrfToken: "{{ csrf_token }}",
-        } );
+	{% include 'spirit/_footer.html' %}
+	
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static "spirit/forum/plugins/jquery/jquery-1.9.1.min.js" %}"></script>
+	<script src="{% static "spirit/forum/plugins/jquery/jquery-migrate-1.1.0.min.js" %}"></script>
+	<script src="{% static "spirit/forum/plugins/bootstrap/js/bootstrap.min.js" %}"></script>
+	<!--[if lt IE 9]>
+		<script src="{% static "spirit/forum/crossbrowserjs/html5shiv.js" %}"></script>
+		<script src="{% static "spirit/forum/crossbrowserjs/respond.min.js" %}"></script>
+		<script src="{% static "spirit/forum/crossbrowserjs/excanvas.min.js" %}"></script>
+	<![endif]-->
+	<script src="{% static "spirit/forum/plugins/jquery-cookie/jquery.cookie.js" %}"></script>
+	<script src="{% static "spirit/forum/js/apps.min.js" %}"></script>
+	<!-- ================== END BASE JS ================== -->
+	
 
-        $('.js-messages').messages();
-
-        {% if user.is_authenticated %}
-            $.notification( {
-                notificationUrl: "{% url "spirit:topic:notification:index-ajax" %}",
-                notificationListUrl: "{% url "spirit:topic:notification:index-unread" %}",
-                mentionTxt: "{% trans "{user} has mention you on {topic}" %}",
-                commentTxt: "{% trans "{user} has commented on {topic}" %}",
-                showAll: "{% trans "Show all" %}",
-                empty: "{% trans "No new notifications, yet" %}",
-                unread: "{% trans "unread" %}",
-            } );
-        {% endif %}
-
-	});
-
-	</script>
-
-    {% block head-extra %}{% endblock %}
-
-    <!--[if (lt IE 9) & (!IEMobile)]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
-    <![endif]-->
-
-  </head>
-
-  <body>
-
-    {% include 'spirit/_header.html' %}
-    {% render_messages messages %}
-    {% block content %}{% endblock %}
-    {% include 'spirit/_footer.html' %}
-
-  </body>
-
+</body>
 </html>

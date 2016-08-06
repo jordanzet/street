@@ -1,7 +1,9 @@
 {% load i18n %}
 
-<form method="get" action="{% url "spirit:search:search" %}">
-    {% include "spirit/_form.html" %}
+<form class="navbar-form" method="get" action="{% url "spirit:search:search" %}">
+	<div class="form-group">
+		{% include "spirit/_form.html" %}
 
-    <input class="button" type="submit" value="{% trans "Search" %}" />
+		<button type="submit" value="{% trans "Search" %}" class="btn btn-search"><i class="fa fa-search"></i></button>
+	</div>
 </form>

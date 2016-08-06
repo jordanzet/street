@@ -16,7 +16,7 @@ ST_RATELIMIT_SKIP_TIMEOUT_CHECK = False
 ST_NOTIFICATIONS_PER_PAGE = 20
 
 ST_COMMENT_MAX_LEN = 3000
-ST_MENTIONS_PER_COMMENT = 30
+ST_MENTIONS_PER_COMMENT = 5
 ST_DOUBLE_POST_THRESHOLD_MINUTES = 30
 
 ST_YT_PAGINATOR_PAGE_RANGE = 3
@@ -28,9 +28,7 @@ ST_USER_LAST_SEEN_THRESHOLD_MINUTES = 1
 ST_PRIVATE_FORUM = False
 
 ST_ALLOWED_UPLOAD_IMAGE_FORMAT = ('jpeg', 'png', 'gif')
-ST_ALLOWED_URL_PROTOCOLS = {
-	'http', 'https', 'mailto', 'ftp', 'ftps',
-	'git', 'svn', 'magnet', 'irc', 'ircs'}
+ST_ALLOWED_URL_PROTOCOLS = {'http', 'https', 'mailto', 'ftp', 'ftps','git', 'svn', 'magnet', 'irc', 'ircs'}
 
 ST_UNICODE_SLUGS = True
 

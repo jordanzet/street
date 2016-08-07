@@ -17,15 +17,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TopicFavorite',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('topic', models.ForeignKey(to='spirit_topic.Topic')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(related_name='st_topic_favorites', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['-date', '-pk'],
-                'verbose_name_plural': 'favorites',
                 'verbose_name': 'favorite',
+                'verbose_name_plural': 'favorites',
             },
         ),
         migrations.AlterUniqueTogether(

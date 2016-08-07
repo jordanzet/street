@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('comment_number', models.PositiveIntegerField(default=0)),
                 ('topic', models.ForeignKey(to='spirit_topic.Topic')),
-                ('user', models.ForeignKey(verbose_name='user', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(related_name='st_comment_bookmarks', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name': 'comment bookmark',

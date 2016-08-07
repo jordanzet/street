@@ -15,14 +15,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CommentHistory',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('comment_html', models.TextField(verbose_name='comment html')),
                 ('date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('comment_fk', models.ForeignKey(verbose_name='original comment', to='spirit_comment.Comment')),
             ],
             options={
-                'verbose_name': 'comment history',
                 'ordering': ['-date', '-pk'],
+                'verbose_name': 'comment history',
                 'verbose_name_plural': 'comments history',
             },
         ),

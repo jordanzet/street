@@ -9,40 +9,40 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('spirit_comment', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
             name='CommentFlag',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('is_closed', models.BooleanField(default=False)),
                 ('comment', models.OneToOneField(to='spirit_comment.Comment')),
-                ('moderator', models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, blank=True)),
+                ('moderator', models.ForeignKey(related_name='st_comment_flags', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
-                'verbose_name_plural': 'comments flags',
                 'ordering': ['-date', '-pk'],
                 'verbose_name': 'comment flag',
+                'verbose_name_plural': 'comments flags',
             },
         ),
         migrations.CreateModel(
             name='Flag',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('reason', models.IntegerField(choices=[(0, 'Spam'), (1, 'Other')], verbose_name='reason')),
+                ('reason', models.IntegerField(verbose_name='reason', choices=[(0, 'Spam'), (1, 'Other')])),
                 ('body', models.TextField(verbose_name='body', blank=True)),
                 ('comment', models.ForeignKey(to='spirit_comment.Comment')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(related_name='st_flags', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'verbose_name_plural': 'flags',
                 'ordering': ['-date', '-pk'],
                 'verbose_name': 'flag',
+                'verbose_name_plural': 'flags',
             },
         ),
         migrations.AlterUniqueTogether(

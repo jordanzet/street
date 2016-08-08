@@ -5,7 +5,7 @@
 {% block title %}{% trans "Publish topic" %}{% endblock %}
 
 {% block head-extra %}
-    <script>
+	<script>
 
 	$( document ).ready(function() {
 
@@ -18,24 +18,28 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Publish topic" %}</h1>
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-4 col-md-4">
+				<h2 class="headline">{% trans "Publish topic" %}</h2>
+				<form action="." method="post" class="js-reply">
+					{% csrf_token %}
 
-    <form action="." method="post" class="js-reply">
-        {% csrf_token %}
+					
+					{% include "spirit/_form.html" %}
 
-        {# topic #}
-        {% include "spirit/_form.html" %}
+					<div class="topic-publish-comment">
+						{% include "spirit/_form.html" with form=cform %}
+					</div>
+					
+					{% include "spirit/comment/_editor.html" %}
 
-        {# comment #}
-        <div class="topic-publish-comment">
-            {% include "spirit/_form.html" with form=cform %}
-        </div>
-
-        <div class="container">
-            {% include "spirit/comment/_editor.html" %}
-
-            <input class="button reply-button" type="submit" value="{% trans "Publish" %}" />
-        </div>
-    </form>
+					<input class="button reply-button" type="submit" value="{% trans "Publish" %}" />
+				</form>
+			</div>
+		</div> 
+	</div>
+</div>
 
 {% endblock %}

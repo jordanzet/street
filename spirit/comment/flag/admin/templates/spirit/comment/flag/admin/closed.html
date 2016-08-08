@@ -1,4 +1,4 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load i18n %}
 
@@ -8,8 +8,12 @@
 
     {% include "spirit/admin/_side_menu.html" with active="flags" %}
 
+<div id="content" class="content">
+	<div class="row">
+		<div class="col-md-12">
     <h1 class="headline">{% trans "Closed flags" %}</h1>
-
     {% include "spirit/comment/flag/admin/_list.html" with active_tab="closed" %}
-
+		</div>
+	</div>
+</div>
 {% endblock %}

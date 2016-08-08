@@ -18,7 +18,7 @@
 		<ul class="popular-tags">
 			{% for c in categories %}
 				<li><a href="{{ c.get_absolute_url }}"><i class="fa fa-circle"></i> {{ c.title }}</a></li>
-			{% endfor %}
+			{% endfor %} 
 			
 			{% if category.parent %}
 				<li><a href="{{ category.parent.get_absolute_url }}"><i class="fa fa-circle"></i> Todas las subcategorias</a></li>
@@ -32,9 +32,9 @@
 	<div class="col-md-12">
 		<div class="new-topic" style="text-align: center; margin: 18px; font-weight: 700; font-size: initial;">
 			{% if category %}
-				<a class="button" style="background: white; padding: 10px;" href="{% url "spirit:topic:publish" category.pk %}">Hacer Pregunta</a>
+				<a class="button" style="background: white; padding:5px 10px;border-radius:.6em;text-decoration:none;" href="{% url "spirit:topic:publish" category.pk %}">Hacer Pregunta</a>
 			{% else %}
-				<a class="button" style="background: white; padding: 10px;" href="{% url "spirit:topic:publish" %}">Hacer Pregunta</a>
+				<a class="button" style="background: white; padding:5px 10px;border-radius:.6em;text-decoration:none;" href="{% url "spirit:topic:publish" %}">Hacer Pregunta</a>
 			{% endif %}
 		</div>
 	</div>

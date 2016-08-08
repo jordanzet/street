@@ -174,7 +174,7 @@ def likes(request, pk, slug):
 		per_page=config.comments_per_page,
 	)
 
-
+ 
 @login_required
 def menu(request):
 	return render(request, 'spirit/user/menu.html')

@@ -17,55 +17,55 @@ from ..models import CommentFlag, Flag
 
 @administrator_required
 def detail(request, pk):
-    flag = get_object_or_404(CommentFlag, pk=pk)
+	flag = get_object_or_404(CommentFlag, pk=pk)
 
-    if request.method == 'POST':
-        form = CommentFlagForm(user=request.user, data=request.POST, instance=flag)
+	if request.method == 'POST':
+		form = CommentFlagForm(user=request.user, data=request.POST, instance=flag)
 
-        if form.is_valid():
-            form.save()
-            messages.info(request, _("The flag has been moderated!"))
-            return redirect(reverse("spirit:admin:flag:index"))
-    else:
-        form = CommentFlagForm(instance=flag)
+		if form.is_valid():
+			form.save()
+			messages.info(request, _("The flag has been moderated!"))
+			return redirect(reverse("spirit:admin:flag:index"))
+	else:
+		form = CommentFlagForm(instance=flag)
 
-    flags = yt_paginate(
-        Flag.objects.filter(comment=flag.comment),
-        per_page=config.comments_per_page,
-        page_number=request.GET.get('page', 1)
-    )
+	flags = yt_paginate(
+		Flag.objects.filter(comment=flag.comment),
+		per_page=config.comments_per_page,
+		page_number=request.GET.get('page', 1)
+	)
 
-    context = {
-        'flag': flag,
-        'flags': flags,
-        'form': form
-    }
+	context = {
+		'flag': flag,
+		'flags': flags,
+		'form': form
+	}
 
-    return render(request, 'spirit/comment/flag/admin/detail.html', context)
+	return render(request, 'spirit/comment/flag/admin/detail.html', context)
 
 
 @administrator_required
 def _index(request, queryset, template):
-    flags = yt_paginate(
-        queryset,
-        per_page=config.comments_per_page,
-        page_number=request.GET.get('page', 1)
-    )
-    context = {'flags': flags, }
-    return render(request, template, context)
+	flags = yt_paginate(
+		queryset,
+		per_page=config.comments_per_page,
+		page_number=request.GET.get('page', 1)
+	)
+	context = {'flags': flags, }
+	return render(request, template, context)
 
 
 def opened(request):
-    return _index(
-        request,
-        queryset=CommentFlag.objects.filter(is_closed=False),
-        template='spirit/comment/flag/admin/open.html'
-    )
+	return _index(
+		request,
+		queryset=CommentFlag.objects.filter(is_closed=False),
+		template='spirit/comment/flag/admin/open.html'
+	)
 
 
 def closed(request):
-    return _index(
-        request,
-        queryset=CommentFlag.objects.filter(is_closed=True),
-        template='spirit/comment/flag/admin/closed.html'
-    )
+	return _index(
+		request,
+		queryset=CommentFlag.objects.filter(is_closed=True),
+		template='spirit/comment/flag/admin/closed.html'
+	)

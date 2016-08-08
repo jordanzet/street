@@ -1,4 +1,4 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load i18n %}
 
@@ -6,14 +6,25 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Edit user" %}</h1>
-
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" with form=uform %}
-        {% include "spirit/_form.html" %}
-
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
+{% include "spirit/admin/_side_menu.html" with active="users" %}
+<div id="content" class="content">
+	<div class="row">
+		<div class="col-md-9">
+		    <div class="panel panel-inverse">
+				<div class="panel-heading">
+					<h4 class="panel-title">{% trans "Edit user" %}</h4>
+				</div>
+				<div class="panel-body">
+					<form action="." method="post">
+						{% csrf_token %}
+						{% include "spirit/_form.html" with form=uform %}
+						{% include "spirit/_form.html" %}
+						<input class="btn btn-sm btn-primary m-r-5" type="submit" name="post" value="{% trans "Save" %}" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

@@ -1,7 +1,9 @@
 {% load spirit_tags i18n %}
+{% load static from staticfiles %}
+
 <div id="header" class="header navbar navbar-default navbar-fixed-top">
 	<div class="container">
-		<div class="navbar-header">
+		<div class="navbar-header"> 
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -19,9 +21,9 @@
 					<li class="dropdown">
 						<a data-toggle="dropdown" href="{% url "spirit:topic:notification:index" %}"> <i class="fa fa-bell"></i> </a>
 						<div class="status green">&nbsp;</div>
-						<ul class="dropdown-menu" role="menu">							
+						<ul class="dropdown-menu" role="menu">
 							{% for n in notifications %}
-								<div class="col-md-12">	
+								<div class="col-md-12">
 								
 								{% url "spirit:user:detail" pk=n.comment.user.pk slug=n.comment.user.st.slug as url_profile %}
 								{% url "spirit:comment:find" pk=n.comment.pk as url_topic %}
@@ -39,21 +41,25 @@
 								{% endif %}
 								</div>
 								<hr>
-							
 							{% empty %}
 								<p>No hay notificaciones</p>
 							{% endfor %}
-
-							
 						</ul>
 					</li>
 
 					<li class="dropdown">
-						{% render_search_form %}
+						<a data-toggle="dropdown" href="{% url "spirit:topic:notification:index" %}"> <i class="fa fa-search"></i> </a>
+						<div class="status green">&nbsp;</div>
+						<ul class="dropdown-menu" role="menu">
+							{% render_search_form %}
+						</ul>
+						
 					</li>
 
 					<li class="avatar pull-left dropdown">
-						<a data-toggle="dropdown" href="#"><img src="images/avatar.jpg" alt=""/> {{ user.username }}</a>
+						<a data-toggle="dropdown" href="#">
+							<img style="width: 30px; border-radius: .5em; margin: 0 4px;" src="{% static "spirit/forum/img/user-1.jpg" %}" alt=""/> {{ user.username }}
+						</a>
 						<div class="status green">&nbsp;</div>
 						<ul class="dropdown-menu" role="menu">
 							<li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">Perfil</a></li>
@@ -61,7 +67,8 @@
 
 							<li role="presentation"><a role="menuitem" tabindex="-3" href="{% url "spirit:topic:unread:index" %}">Temas no Leidos</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-4" href="{% url "spirit:topic:private:index" %}">Temas Privados</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-5" href="{% url "spirit:search:search" %}" ><i class="fa fa-search"> Busqueda Avanzada</i></a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-5" href="{% url "spirit:search:search" %}" >
+								<i class="fa fa-search"> Busqueda Avanzada</i></a></li>
 
 							{% if user.st.is_administrator %}
 							<li role="presentation"><a role="menuitem" tabindex="-6" href="{% url "spirit:admin:index" %}">Admin</a></li>
@@ -73,10 +80,7 @@
 				</ul>
 			{% else %}
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						{% render_search_form %}
-					</li>
-					<li><a href="#">Crear una Cuenta</a></li>
+					<li><a href="{% url "spirit:user:auth:register" %}?next={% firstof request.get_full_path|urlencode '/' %}">Crear una Cuenta</a></li>
 					<li><a href="{% url "spirit:user:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">Iniciar Sesión</a></li>
 				</ul>
 			{% endif %}

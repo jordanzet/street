@@ -1,0 +1,80 @@
+{% load spirit_tags i18n %}
+{% load static from staticfiles %}
+
+<div id="header" class="header navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> Street Politician</a>
+			<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		{% if user.is_authenticated %}
+		{% has_topic_notifications user as has_notifications %}
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a href="{% url "spirit:topic:notification:index" %}" data-toggle="dropdown" class="dropdown-toggle f-s-14">
+					<i class="fa fa-bell-o"></i>
+					<span class="label">5</span>
+				</a>
+				<ul class="dropdown-menu media-list pull-right animated fadeInDown">
+					{% for n in notifications %}
+					<li class="dropdown-header">Notificaciones (5)</li>
+					<li class="media">
+						<a href="javascript:;">
+							<div class="media-left"><img src="{% static "spirit/admin/img/user-2.jpg" %}" class="media-object" alt="" /></div>
+							<div class="media-body">
+								<h6 class="media-heading">Olivia</h6>
+								<p>
+									<!-- -->
+
+									{% url "spirit:user:detail" pk=n.comment.user.pk slug=n.comment.user.st.slug as url_profile %} {% url "spirit:comment:find" pk=n.comment.pk as url_topic %} {% if n.is_comment %} {% blocktrans trimmed with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has commented on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %} {% elif n.is_mention %} {% blocktrans trimmed with username=n.comment.user.username topic_title=n.topic.title %}<a href="{{ url_profile }}">{{ username }}</a> has mention you on <a href="{{ url_topic }}">{{ topic_title }}</a>{% endblocktrans %} {% else %} Unknow action {% endif %} {% if not n.is_read %}
+									<span class="row-unread">{% trans "unread" %}</span> {% endif %}
+
+								</p>
+								<div class="text-muted f-s-11">35 minutes ago</div>
+							</div>
+						</a>
+					</li>
+
+					<li class="dropdown-footer text-center">
+						<a href="javascript:;">View more</a>
+					</li>
+
+					{% empty %}
+					<li class="dropdown-header">No hay notificaciones</li>
+					{% endfor %}
+				</ul>
+			</li>
+
+			<li class="dropdown navbar-user">
+				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+					<img src="{% static "spirit/admin/img/user-13.jpg" %}" alt="" />
+					<span class="hidden-xs"> {{ user.username }}</span> <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu animated fadeInLeft">
+					<li class="arrow"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">Perfil</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-2" href="{% url "spirit:topic:index-active" %}">Temas</a></li>
+
+					<li role="presentation"><a role="menuitem" tabindex="-3" href="{% url "spirit:topic:unread:index" %}">Temas no Leidos</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-4" href="{% url "spirit:topic:private:index" %}">Temas Privados</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-5" href="{% url "spirit:search:search" %}"><i class="fa fa-search"> Busqueda Avanzada</i></a></li>
+
+					{% if user.st.is_administrator %}
+					<li class="divider"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-6" href="{% url "spirit:admin:index" %}">Admin</a></li>
+					{% endif %}
+
+					<li class="divider"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-7" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">Cerrar Sesión</a></li>
+
+				</ul>
+			</li>
+
+		</ul>
+		{% endif %}
+	</div>
+</div>

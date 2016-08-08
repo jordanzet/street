@@ -1,4 +1,4 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load spirit_tags i18n %}
 
@@ -6,14 +6,16 @@
 
 {% block content %}
 
-    {% include "spirit/admin/_side_menu.html" with active="topics" %}
+	{% include "spirit/admin/_side_menu.html" with active="topics" %}
 
-    <h1 class="headline">{% trans "Pinned topics" %}</h1>
-    
-    {% include "spirit/topic/admin/_tabs.html" with active_tab="pinned" %}
-    
-    {% include "spirit/topic/_render_list.html" %}
-
-    {% render_paginator topics %}
-
+<div id="content" class="content">
+	<div class="row">
+		<div class="col-md-12">
+	<h1 class="headline">{% trans "Pinned topics" %}</h1>
+	{% include "spirit/topic/admin/_tabs.html" with active_tab="pinned" %}
+	{% include "spirit/topic/_render_list.html" %}
+	{% render_paginator topics %}
+		</div>
+	</div>
+</div>
 {% endblock %}

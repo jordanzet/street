@@ -6,14 +6,20 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Are you sure you want to log out?" %}</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-4 col-md-4" style="padding:100px 0;">
+				<h4 class="headline">{% trans "Are you sure you want to log out?" %}</h4>
+				<div class="logout">
+					<form action="." method="post">
+						{% csrf_token %}
 
-    <div class="logout">
-        <form action="." method="post">
-            {% csrf_token %}
-
-            <input class="button" type="submit" name="post" value="{% trans "Log out" %}" />
-        </form>
-    </div>
+						<input class="form-control" style=" background: red; color: white; font-size: 1.2em; font-weight: 600;"	 type="submit" name="post" value="{% trans "Log out" %}" />
+					
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

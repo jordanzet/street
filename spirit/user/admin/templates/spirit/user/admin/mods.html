@@ -1,4 +1,4 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load i18n %}
 
@@ -6,10 +6,13 @@
 
 {% block content %}
 
+<div id="content" class="content">
+	<div class="row">
+		<div class="col-md-12">
     {% include "spirit/admin/_side_menu.html" with active="users" %}
-
     <h1 class="headline">{% trans "Mods" %}</h1>
-
     {% include "spirit/user/admin/_list.html" with active_tab="mods" %}
-
+		</div>
+	</div>
+</div>
 {% endblock %}

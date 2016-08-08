@@ -5,14 +5,21 @@
 {% block title %}{% trans "Email change" %}{% endblock %}
 
 {% block content %}
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-4 col-md-4">
+			    <h1 class="headline">{% trans "Email change" %}</h1>
+			    <form action="." method="post">
+			        {% csrf_token %}
+			        {% include "spirit/_form.html" %}
 
-    <h1 class="headline">{% trans "Email change" %}</h1>
+			        <input class="button" type="submit" name="post" value="{% trans 'Change my email' %}" />
+			    </form>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
-
-        <input class="button" type="submit" name="post" value="{% trans 'Change my email' %}" />
-    </form>
 
 {% endblock %}

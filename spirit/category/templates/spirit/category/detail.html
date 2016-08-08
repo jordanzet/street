@@ -6,10 +6,17 @@
 
 {% block content %}
 
-    {% include "spirit/topic/_top_bar.html" with category=category categories=subcategories %}
-
-    {% include "spirit/topic/_render_list.html" with show_subcategory=True %}
-
-    {% render_paginator topics %}
-
+<div class="content">
+	{% include "spirit/topic/_top_bar.html" with category=category categories=subcategories %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			    <br>
+			    {% render_paginator topics %}
+			    {% include "spirit/topic/_render_list.html" with show_subcategory=True %}
+			    {% render_paginator topics %}
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

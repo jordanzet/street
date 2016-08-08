@@ -1,4 +1,4 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load i18n %}
 
@@ -6,46 +6,86 @@
 
 {% block content %}
 
-    {% include "spirit/admin/_side_menu.html" with active="categories" %}
+	{% include "spirit/admin/_side_menu.html" with active="categories" %}
 
-    <h1 class="headline">{% trans "Category list" %}</h1>
+<div id="content" class="content">
+	<ol class="breadcrumb pull-right">
+		<li><a href="javascript:;">Inicio</a></li>
+		<li class="active">{% trans "Category list" %}</li>
+	</ol>
+	<h1 class="page-header">{% trans "Category list" %}</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-inverse" data-sortable-id="table-basic-7">
+				<div class="panel-heading">
+					<h4 class="panel-title">Responsive Table</h4> </div>
+				<div class="panel-body">
+					<a class="button" href="{% url "spirit:admin:category:create" %}">{% trans "Create Category" %}</a>
+				</div>
+				<div class="panel-body">
+					
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>#cat</th>
+									<th>Url</th>
+									<th>Nombre</th>
+									<th>Descripción</th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for c in categories %}
+								<tr {% if c.color %}style="color: {{ c.color }}"{% endif %}>
+									<td>{{ c.id }}</td>
+									<td> <a href="{{ c.get_absolute_url }}">{{ c.get_absolute_url }}</a> </td>
+									<td>{{ c.title }}</td>
+									<td>{{ c.description }}</td>
+									<td>
+										{% if c.is_removed %}
+											<i class="fa fa-times"></i>
+										{% endif %}
 
-    <a class="button" href="{% url "spirit:admin:category:create" %}">{% trans "Create Category" %}</a>
+										{% if c.is_closed %}
+											<i class="fa fa-lock"></i>
+										{% endif %}
 
-    <div class="rows">
+										<a class="row-edit" href="{% url "spirit:admin:category:update" category_id=c.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
+									</td>
+								</tr>
 
-        {% for c in categories %}
-            <div class="row">
-                <a {% if c.color %}style="color: {{ c.color }}"{% endif %} href="{{ c.get_absolute_url }}">{{ c.title }}</a>
+									{% for subc in c.category_set.all %}
+									<tr {% if subc.color %}style="color: {{ subc.color }}"{% endif %}>
 
-                {% if c.is_removed %}
-                    <i class="fa fa-times"></i>
-                {% endif %}
+										<td> - - - - -</td>
+										<td> <a href="{{ subc.get_absolute_url }}">{{ subc.get_absolute_url }}</a> </td>
+										<td>{{ subc.title }}</td>
+										<td>{{ subc.description }}</td>
+										<td>
+											{% if subc.is_removed %}
+												<i class="fa fa-times"></i>
+											{% endif %}
 
-                {% if c.is_closed %}
-                    <i class="fa fa-lock"></i>
-                {% endif %}
+											{% if subc.is_closed %}
+												<i class="fa fa-lock"></i>
+											{% endif %}
 
-                <a class="row-edit" href="{% url "spirit:admin:category:update" category_id=c.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
-            </div>
+											<a class="row-edit" href="{% url "spirit:admin:category:update" category_id=subc.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
+										</td>
+									</tr>
+									{% endfor %}
+								{% endfor %}
 
-            {% for subc in c.category_set.all %}
-                <div class="row">
-                    --- <a {% if subc.color %}style="color: {{ subc.color }}"{% endif %} href="{{ subc.get_absolute_url }}">{{ subc.title }}</a>
-
-                    {% if subc.is_removed %}
-                        <i class="fa fa-times"></i>
-                    {% endif %}
-
-                    {% if subc.is_closed %}
-                        <i class="fa fa-lock"></i>
-                    {% endif %}
-
-                    <a class="row-edit" href="{% url "spirit:admin:category:update" category_id=subc.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
-                </div>
-            {% endfor %}
-        {% endfor %}
-
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+
+
 
 {% endblock %}

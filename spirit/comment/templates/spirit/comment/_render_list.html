@@ -3,14 +3,6 @@
 
 
 <div class="col-md-12">
-
-	<!--<div class="comment-banner-msg">
-		Posting to the forum is only allowed for members with active accounts. Please <a href="#">sign in</a> or <a href="#">sign up</a> to post.
-	</div>-->
-	
-</div>	
-
-<div class="col-md-12">
 	<div class="col-md-6">
 		<div class="comment-banner-msg">
 			Comentarios a Favor
@@ -51,44 +43,37 @@
 
 						{% if not c.action %}
 						<div class="col-md-12">
-							<div class="col-md-12">
-								<h6>Privilegios de Autentificación - Moderador</h6>
 								{% if user.is_authenticated %}
 									{% if user.st.is_moderator %}
-										<a href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a>
+										<a class="adminst" href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a>
 									{% endif %}
 
-									<a href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
+									<a class="adminst" href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
 								{% endif %}
-							</div>
+								<a class="js-share adminst" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a>
+							
 
-							<div class="col-md-12">
-								<a class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a>
-							</div>
-
-							<div class="col-md-12">
 								{% if user.is_authenticated %}
 									{% if c.like %}
-										<a class="js-like" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a>
+										<a class="js-like adminst" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a>
 									{% else %}
 										{% ifnotequal c.user user  %}
-											<a class="js-like" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a>
+											<a class="js-like adminst" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a>
 										{% else %}
 											<i class="fa fa-heart"></i> ({{ c.likes_count }})
 										{% endifnotequal %}
 									{% endif %}
 
 									{% if user.st.is_moderator or c.user.pk == user.pk %}
-										<a href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
+										<a class="adminst" href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
 									{% endif %}
 
 									{% ifnotequal c.user.pk user.pk %}
-										<a href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
-										<a href="#reply" >{% trans "reply" %}</a>
+										<a class="adminst" href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
+										<a class="adminst" href="#reply" >{% trans "reply" %}</a>
 									{% endifnotequal %}
 								{% endif %}
-							</div>
-							<div class="col-md-12">
+							
 								<div class="share js-share-{{ c.pk }}" style="display: none;">
 									<div class="share-box">
 										<a class="share-close" href="#" ><i class="fa fa-times"></i> {% trans "close" %}</a>
@@ -103,7 +88,7 @@
 										{% endwith %}
 									</div>
 								</div>
-							</div>
+							
 						</div>
 						{% endif %}
 					</div>
@@ -135,11 +120,8 @@
 							<a href="{% url "spirit:comment:undelete" c.pk %}"><i class="fa fa-times"></i> {% trans "undelete" %}</a>
 						</div>
 						{% endif %}
-
-						
 					</div>
 					{% endif %}
-
 				</div>
 			</li>
 			{% endfor %}
@@ -186,45 +168,39 @@
 
 						{% if not c.action %}
 						<div class="col-md-12">
-							<div class="col-md-12">
-								<h6>Privilegios de Autentificación - Moderador</h6>
 								{% if user.is_authenticated %}
 									{% if user.st.is_moderator %}
-										<a href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a>
+										<a  class="adminst" href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a>
 									{% endif %}
 
-									<a href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
+									<a  class="adminst" href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
 								{% endif %}
-							</div>
+							
 
-							<div class="col-md-12">
-								<a class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a>
-							</div>
-
-							<div class="col-md-12">
+								<a  class="js-share adminst" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a>
+							
 								{% if user.is_authenticated %}
 									{% if c.like %}
-										<a class="js-like" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a>
+										<a class="js-like adminst" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a>
 									{% else %}
 										{% ifnotequal c.user user  %}
-											<a class="js-like" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a>
+											<a class="js-like adminst" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a>
 										{% else %}
 											<i class="fa fa-heart"></i> ({{ c.likes_count }})
 										{% endifnotequal %}
 									{% endif %}
 
 									{% if user.st.is_moderator or c.user.pk == user.pk %}
-										<a href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
+										<a class="adminst" href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
 									{% endif %}
 
 									{% ifnotequal c.user.pk user.pk %}
-										<a href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
-										<a href="#reply" >{% trans "reply" %}</a>
+										<a class="adminst" href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
+										<a class="adminst" href="#reply" >{% trans "reply" %}</a>
 									{% endifnotequal %}
 								{% endif %}
-							</div>
-							<div class="col-md-12">
-								<div class="share js-share-{{ c.pk }}" style="display: none;">
+							
+								<div class="share adminst js-share-{{ c.pk }}" style="display: none;">
 									<div class="share-box">
 										<a class="share-close" href="#" ><i class="fa fa-times"></i> {% trans "close" %}</a>
 										{% with comment_url=c.get_absolute_url %}
@@ -238,7 +214,6 @@
 										{% endwith %}
 									</div>
 								</div>
-							</div>
 						</div>
 						{% endif %}
 					</div>

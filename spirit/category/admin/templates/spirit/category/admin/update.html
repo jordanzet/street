@@ -1,18 +1,30 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load i18n %}
 
 {% block title %}{% trans "Update Category" %}{% endblock %}
 
 {% block content %}
+	{% include "spirit/admin/_side_menu.html" with active="categories" %}
 
-    <h1 class="headline">{% trans "Update Category" %}</h1>
+	<div class="content">
+		<div class="row"> 
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
-
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
-
+			<div class="col-md-6">
+				<div class="panel panel-inverse">
+					<div class="panel-heading">
+						
+						<h4 class="panel-title">{% trans "Update Category" %}</h4>
+					</div>
+					<div class="panel-body">
+						<form action="." method="post">
+							{% csrf_token %}
+							{% include "spirit/_form.html" %}							
+							<input class="btn btn-sm btn-primary m-r-5" type="submit" name="post" value="{% trans "Save" %}" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

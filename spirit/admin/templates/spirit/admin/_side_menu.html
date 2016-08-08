@@ -1,16 +1,46 @@
 {% load i18n %}
+{% load static from staticfiles %}
 
-<a class="button" href="#side-menu"><i class="fa fa-bars"></i> {% trans "Show menu" %}</a>
+<div id="sidebar" class="sidebar">
+	<div data-scrollbar="true" data-height="100%">
+		
+		<ul class="nav">
+			<li class="nav-header">{% trans "Show menu" %}</li>
+			<li><a href="calendar.html"></a></li>
 
-<div id="side-menu" class="side-menu">
-    <a class="side-menu-close" href="#"><i class="fa fa-times-circle-o"></i></a>
 
-	<ul>
-        <li><a class="side-menu-link{% ifequal active "dashboard" %} is-selected{% endifequal %}" href="{% url "spirit:admin:index" %}">{% trans "Dashboard" %}</a></li><!--
-	 --><li><a class="side-menu-link{% ifequal active "basic_settings" %} is-selected{% endifequal %}" href="{% url "spirit:admin:config-basic" %}">{% trans "Basic settings" %}</a></li><!--
-	 --><li><a class="side-menu-link{% ifequal active "categories" %} is-selected{% endifequal %}" href="{% url "spirit:admin:category:index" %}">{% trans "Categories" %}</a></li><!--
-	 --><li><a class="side-menu-link{% ifequal active "topics" %} is-selected{% endifequal %}" href="{% url "spirit:admin:topic:index" %}">{% trans "Topics" %}</a></li><!--
-	 --><li><a class="side-menu-link{% ifequal active "users" %} is-selected{% endifequal %}" href="{% url "spirit:admin:user:index" %}">{% trans "Users" %}</a></li><!--
-	 --><li><a class="side-menu-link{% ifequal active "flags" %} is-selected{% endifequal %}" href="{% url "spirit:admin:flag:index" %}">{% trans "Flags" %}</a></li>
-	</ul>
+			<li class="{% ifequal active "dashboard" %} active{% endifequal %}">
+				<a href="{% url "spirit:admin:index" %}">
+					<i class="fa fa-calendar"></i> <span>{% trans "Dashboard" %}</span>
+				</a>
+			</li>
+			<li class="{% ifequal active "basic_settings" %} active{% endifequal %}">
+				<a href="{% url "spirit:admin:config-basic" %}">
+					<i class="fa fa-calendar"></i> <span>{% trans "Basic settings" %}</span>
+				</a>
+			</li>
+			<li class="{% ifequal active "categories" %} active{% endifequal %}">
+				<a href="{% url "spirit:admin:category:index" %}">
+					<i class="fa fa-calendar"></i> <span>{% trans "Categories" %}</span>
+				</a>
+			</li>
+			<li class="{% ifequal active "topics" %} active{% endifequal %}">
+				<a href="{% url "spirit:admin:topic:index" %}">
+					<i class="fa fa-calendar"></i> <span>{% trans "Topics" %}</span>
+				</a>
+			</li>
+			<li class="{% ifequal active "users" %} active{% endifequal %}">
+				<a href="{% url "spirit:admin:user:index" %}">
+					<i class="fa fa-calendar"></i> <span>{% trans "Users" %}</span>
+				</a>
+			</li>
+			<li class="{% ifequal active "flags" %} active{% endifequal %}">
+				<a href="{% url "spirit:admin:flag:index" %}">
+					<i class="fa fa-calendar"></i> <span>{% trans "Flags" %}</span>
+				</a>
+			</li>
+			<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+		</ul>
+	</div>
 </div>
+<div class="sidebar-bg"></div>		

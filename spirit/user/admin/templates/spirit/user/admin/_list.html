@@ -2,14 +2,35 @@
 
 {% include "spirit/user/admin/_tabs.html" with active_tab=active_tab %}
 
-<div class="rows">
-
-    {% for u in users %}
-        <div class="row">
-            <a href="{{ u.get_absolute_url }}">{{ u.username }}</a> <a class="row-edit" href="{% url "spirit:admin:user:edit" user_id=u.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
+<div class="panel panel-inverse" data-sortable-id="table-basic-7">
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Perfil</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td>{{ u.pk }}</td>
+                        <td><a href="{{ u.get_absolute_url }}">{{ u.username }}</a> </td>
+                        <td>{{ u.username }}</td>
+                        <td>
+                        	<a href="{% url "spirit:admin:user:edit" user_id=u.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    {% endfor %}
-
+    </div>
 </div>
+    
+
 
 {% render_paginator users %}

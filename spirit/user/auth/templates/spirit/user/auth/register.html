@@ -5,12 +5,12 @@
 {% block title %}{% trans "Register" %}{% endblock %}
 
 {% block head-extra %}
-    <script>
+	<script>
 
 	$( document ).ready(function() {
 
-        $( "input[name=honeypot]" ).hide();
-        $( "label[for=id_honeypot]" ).hide();
+		$( "input[name=honeypot]" ).hide();
+		$( "label[for=id_honeypot]" ).hide();
 
 	});
 
@@ -19,13 +19,31 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Register" %}</h1>
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-4 col-md-4">
+			<div class="panel panel-forum" style="margin:40px 0 0 0;">
+				<div class="panel-heading">
+					<h4 class="panel-title">{% trans "Register" %}</h4>
+				</div>
+				<div class="panel-body">
+					<form action="." method="post">
+						{% csrf_token %}
+						{% include "spirit/_form.html" %}
+						<div class="m-t-10">
+							<button type="submit" name="post" href="" class="btn btn-theme"> {% trans "Register" %}</button>
+						</div>
+					</form>
+				</div>
+			</div>
 
-        <input class="button" type="submit" name="post" value="{% trans "Register" %}" />
-    </form>
+			<div style="margin-bottom:40px;" class="comment-banner-msg">
+			Si ya tienes una cuenta ---> <a href="{% url "spirit:user:auth:login" %}"> Iniciar Sesión</a>
+			</div>
+		</div>
+	</div>
+</div> 
+
 
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends "spirit/_base.html" %}
-
+{% load static from staticfiles %}
 {% load spirit_tags i18n %}
 
 {% block title %}{{ topic.title }}{% endblock %}
@@ -7,31 +7,31 @@
 {% block content %}
 
 
-    <div class="page-title has-bg">
-        <div class="bg-cover">
-            <img src="assets/img/cover3.jpg" alt="" />
-        </div>
-        <div class="container">
-            <ul class="breadcrumb">
-            	<li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a> <i class="fa fa-chevron-right"></i></li>
+	<div class="page-title has-bg">
+		<div class="bg-cover">
+			<img src="{% static "spirit/forum/img/cover3.jpg" %}" alt="" />
+		</div>
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a> <i class="fa fa-chevron-right"></i></li>
 
-            	{% if topic.category.parent_id %}
-				   	<li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a> <i class="fa fa-chevron-right"></i></li>
+				{% if topic.category.parent_id %}
+					<li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a> <i class="fa fa-chevron-right"></i></li>
 				{% endif %}
 
 				<li><a href="{{ topic.category.get_absolute_url }}" >{{ topic.category.title }}</a></li>
-            </ul>
-        </div>
-    </div>
+			</ul>
+		</div>
+	</div>
 
-    <div class="content">
-        <div class="container">
-            <div class="row">
-            	<div class="col-md-12">
-                    <div class="panel panel-forum">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                            	{% if topic.is_pinned or topic.is_globally_pinned %}
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-forum">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								{% if topic.is_pinned or topic.is_globally_pinned %}
 									<i class="fa fa-thumb-tack"></i>
 								{% endif %}
 								{% if topic.is_closed %}
@@ -46,10 +46,10 @@
 							{% elif user.pk == topic.user.pk and not topic.is_closed %}
 								<a href="{% url "spirit:topic:update" topic.pk %}"><i class="fa fa-pencil"></i> {% trans "edit" %}</a>
 							{% endif %}
-                            
-                        </div>
-                        <ul class="threads-list">
-                            {% if user.st.is_moderator %}
+							
+						</div>
+						<ul class="threads-list">
+							{% if user.st.is_moderator %}
 								<div class="topic-moderation js-tabs-container">
 								<a style="padding: 7px 12px;" href="#" ><i class="fa fa-comments"></i> {% trans "Select comments to move" %}</a>
 
@@ -88,33 +88,22 @@
 									</div>
 								</div>
 							{% endif %}
-                        </ul>
-                    </div>
-                </div>
-                {% include "spirit/comment/_render_list.html" %}
-            </div>
-        </div>
-    </div>
+						</ul>
+					</div>
+				</div>
+				{% include "spirit/comment/_render_list.html" %}
+			</div>
+		</div>
+	</div>
 
 	<script>    
-	    $(document).ready(function() {
-	        App.init();
-	        ForumDetailsPage.init();
-	    });
+		$(document).ready(function() {
+			App.init();
+			ForumDetailsPage.init();
+		});
 	</script>
 
 
-
-
-
-
-  
-
-
-
-		
-
-		
 
 		<div class="container">
 		<!--	{% render_paginator page=comments %}-->

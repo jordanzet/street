@@ -22,32 +22,32 @@ User = get_user_model()
 @administrator_required
 def config_basic(request):
 
-    if request.method == 'POST':
-        form = BasicConfigForm(data=request.POST)
+	if request.method == 'POST':
+		form = BasicConfigForm(data=request.POST)
 
-        if form.is_valid():
-            form.save()
-            messages.info(request, _("Settings updated!"))
-            return redirect(request.GET.get("next", request.get_full_path()))
-    else:
-        form = BasicConfigForm()
+		if form.is_valid():
+			form.save()
+			messages.info(request, _("Settings updated!"))
+			return redirect(request.GET.get("next", request.get_full_path()))
+	else:
+		form = BasicConfigForm()
 
-    context = {'form': form, }
+	context = {'form': form, }
 
-    return render(request, 'spirit/admin/config_basic.html', context)
+	return render(request, 'spirit/admin/config_basic.html', context)
 
 
 @administrator_required
 def dashboard(request):
-    # Strongly inaccurate counters below...
-    context = {
-        'version': spirit.__version__,
-        'category_count': Category.objects.all().count() - 1,  # - private
-        'topics_count': Topic.objects.all().count(),
-        'comments_count': Comment.objects.all().count(),
-        'users_count': User.objects.all().count(),
-        'flags_count': CommentFlag.objects.filter(is_closed=False).count(),
-        'likes_count': CommentLike.objects.all().count()
-    }
+	# Strongly inaccurate counters below...
+	context = {
+		'version': spirit.__version__,
+		'category_count': Category.objects.all().count() - 1,  # - private
+		'topics_count': Topic.objects.all().count(),
+		'comments_count': Comment.objects.all().count(),
+		'users_count': User.objects.all().count(),
+		'flags_count': CommentFlag.objects.filter(is_closed=False).count(),
+		'likes_count': CommentLike.objects.all().count()
+	}
 
-    return render(request, 'spirit/admin/dashboard.html', context)
+	return render(request, 'spirit/admin/dashboard.html', context)

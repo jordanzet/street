@@ -1,4 +1,4 @@
-{% extends "spirit/_base.html" %}
+{% extends "spirit/_base-admin.html" %}
 
 {% load i18n %}
 
@@ -6,48 +6,88 @@
 
 {% block content %}
 
-    {% include "spirit/admin/_side_menu.html" with active="dashboard" %}
+	{% include "spirit/admin/_side_menu.html" with active="dashboard" %}
 
-    <h1 class="headline">{% trans "Dashboard" %}</h1>
-
-    <div class="messages-info">
-		<div class="message-title is-info">{% trans "Software" %}</div>
-
-		<ul class="inline-list">
-			<li>{% trans "Installed" %}: {{ version }}</li><!--
-		 --><li>{% trans "Latest" %}: ??</li>
-		</ul>
+<div id="content" class="content">
+	<ol class="breadcrumb pull-right">
+		<li><a href="javascript:;">Home</a></li>
+		<li class="active">{% trans "Dashboard" %}</li>
+	</ol>
+	<h1 class="page-header">{% trans "Dashboard" %} <small> {% trans "Statistics" %}</small></h1>
+	<div class="row">
+		<div class="col-md-3 col-sm-6">
+			<div class="widget widget-stats bg-green">
+				<div class="stats-icon"><i class="fa fa-desktop"></i></div>
+				<div class="stats-info">
+					<h4>{% trans "Members" %}</h4>
+					<p>{{ users_count }}</p>
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6">
+			<div class="widget widget-stats bg-blue">
+				<div class="stats-icon"><i class="fa fa-chain-broken"></i></div>
+				<div class="stats-info">
+					<h4>{% trans "Topics" %}</h4>
+					<p>{{ topics_count }}</p>
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6">
+			<div class="widget widget-stats bg-purple">
+				<div class="stats-icon"><i class="fa fa-users"></i></div>
+				<div class="stats-info">
+					<h4>{% trans "Comments" %}</h4>
+					<p>{{ comments_count }}</p>
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6">
+			<div class="widget widget-stats bg-red">
+				<div class="stats-icon"><i class="fa fa-clock-o"></i></div>
+				<div class="stats-info">
+					<h4>{% trans "Likes" %}</h4>
+					<p>{{ likes_count }}</p>
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6">
+			<div class="widget widget-stats bg-purple">
+				<div class="stats-icon"><i class="fa fa-users"></i></div>
+				<div class="stats-info">
+					<h4>{% trans "Flags" %}</h4>
+					<p>{{ flags_count }}</p>
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-6">
+			<div class="widget widget-stats bg-red">
+				<div class="stats-icon"><i class="fa fa-clock-o"></i></div>
+				<div class="stats-info">
+					<h4>{% trans "Categories" %}</h4>
+					<p>{{ category_count }}</p>
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
 	</div>
-
-    <h2 class="headline">{% trans "Statistics" %}</h2>
-
-	<div>
-
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Members" %}</div>
-			<div class="statistics-count">{{ users_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Topics" %}</div>
-			<div class="statistics-count">{{ topics_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Comments" %}</div>
-			<div class="statistics-count">{{ comments_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Likes" %}</div>
-			<div class="statistics-count">{{ likes_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Flags" %}</div>
-			<div class="statistics-count">{{ flags_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Categories" %}</div>
-			<div class="statistics-count">{{ category_count }}</div>
-		</div>
-
-	</div>
+</div>
 
 {% endblock %}

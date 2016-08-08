@@ -6,22 +6,30 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Preferences" %}</h1>
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<h1 class="headline">{% trans "Preferences" %}</h1>
+				<dl class="preference">
+				   <dt class="preference-label">Correo electrónico:</dt>
+				   <dd class="preference-desc"><a href="{% url "spirit:user:email-change" %}"><i class="fa fa-pencil"></i> {{ user.email }}</a></dd>
 
-    <dl class="preference">
-	   <dt class="preference-label">Correo electrónico:</dt>
-	   <dd class="preference-desc"><a href="{% url "spirit:user:email-change" %}"><i class="fa fa-pencil"></i> {{ user.email }}</a></dd>
+				   <dt class="preference-label">Contraseña:</dt>
+				   <dd class="preference-desc"><a href="{% url "spirit:user:password-change" %}"><i class="fa fa-pencil"></i>Cambiar la Contraseña</a></dd>
+				</dl> 
 
-	   <dt class="preference-label">Contraseña:</dt>
-	   <dd class="preference-desc"><a href="{% url "spirit:user:password-change" %}"><i class="fa fa-pencil"></i>Cambiar la Contraseña</a></dd>
-	</dl> 
+				<form action="." method="post">
+					{% csrf_token %}
+					{% include "spirit/_form.html" with form=uform %}
+					{% include "spirit/_form.html" with form=formp %}
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" with form=uform %}
-        {% include "spirit/_form.html" with form=formp %}
-
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
+					<input class="button" type="submit" name="post" value="{% trans "Save" %}" />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
 
 {% endblock %}

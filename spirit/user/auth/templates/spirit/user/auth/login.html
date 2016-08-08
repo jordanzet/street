@@ -6,19 +6,38 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Login" %}</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-4 col-md-4">
+			<div class="panel panel-forum" style="margin:40px 0 0 0;">
+				<div class="panel-heading">
+					<h4 class="panel-title">{% trans "Login" %}</h4>
+				</div>
+				<div class="panel-body">
+					<form action="." method="post">
+						{% csrf_token %}
+						{% include "spirit/_form.html" %}
+						<!--<div class="form-group">
+							<label>nifnf</label>
+							<input class="form-control" type="text">
+						</div>
 
-    <div class="login">
-        <form action="." method="post">
-            {% csrf_token %}
-            {% include "spirit/_form.html" %}
+						<label >nifnf</label>
+						<input class="form-control" type="text">-->
 
-            <input class="button" type="submit" name="post" value="{% trans "Login" %}" />
-        </form>
-    </div>
+						<div class="m-t-10">
+							<button type="submit" name="post" href="" class="btn btn-theme"> {% trans "Login" %}</button>
+						</div>
+					</form>
+				</div>
+			</div>
 
-    <div class="login-links">
-		<a class="login-link" href="{% url "spirit:user:auth:register" %}">{% trans "Create an account" %}</a>
+			<div style="margin-bottom:40px;" class="comment-banner-msg">
+			Si no tienes una cuenta ---> <a href="{% url "spirit:user:auth:register" %}">{% trans "Create an account" %}</a>
+			</div>
+		</div>
 	</div>
+</div> 
+
 
 {% endblock %}

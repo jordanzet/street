@@ -28,9 +28,9 @@
 	<!-- ================== END BASE JS ================== -->
 
 	<!-- codio de plantilla antigua -->
-	<!--<link rel="stylesheet" href="{% static "spirit/stylesheets/styles.all.min.css" %}">
 	<script src="{% static "spirit/scripts/all.min.js" %}"></script>
-		<script>
+	<script src="{% static "spirit/scripts/js/tab.no-min.js" %}"></script>
+	<script>
 		$( document ).ready(function() {
 
 			$.tab();
@@ -38,9 +38,7 @@
 			$( 'a.js-post' ).postify( {
 				csrfToken: "{{ csrf_token }}",
 			} );
-
 			$('.js-messages').messages();
-
 			{% if user.is_authenticated %}
 				$.notification( {
 					notificationUrl: "{% url "spirit:topic:notification:index-ajax" %}",
@@ -53,8 +51,8 @@
 				} );
 			{% endif %}
 		});
-		</script>
-		{% block head-extra %}{% endblock %}-->
+	</script>
+		{% block head-extra %}{% endblock %}
 		<!--[if (lt IE 9) & (!IEMobile)]>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>

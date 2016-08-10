@@ -9,7 +9,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.opened, name='index'),
-    url(r'^opened/$', views.opened, name='opened'),
-    url(r'^closed/$', views.closed, name='closed'),
+    url(r'^abierto/$', views.opened, name='opened'),
+    url(r'^cerrado/$', views.closed, name='closed'),
     url(r'^(?P<pk>\d+)/$', views.detail, name='detail'),
 ]

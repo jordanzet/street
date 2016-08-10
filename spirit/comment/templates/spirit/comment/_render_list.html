@@ -50,7 +50,6 @@
 
 									<a class="adminst" href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
 								{% endif %}
-								<a class="js-share adminst" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a>
 							
 
 								{% if user.is_authenticated %}
@@ -70,24 +69,8 @@
 
 									{% ifnotequal c.user.pk user.pk %}
 										<a class="adminst" href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
-										<a class="adminst" href="#reply" >{% trans "reply" %}</a>
 									{% endifnotequal %}
 								{% endif %}
-							
-								<div class="share js-share-{{ c.pk }}" style="display: none;">
-									<div class="share-box">
-										<a class="share-close" href="#" ><i class="fa fa-times"></i> {% trans "close" %}</a>
-										{% with comment_url=c.get_absolute_url %}
-											<input class="share-url" type="text" value="{% get_share_url url=comment_url %}" />
-											<ul class="share-actions">
-												<li><a href="{% get_twitter_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-twitter"></i></a></li><!--
-											 --><li><a href="{% get_facebook_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-facebook"></i></a></li><!--
-											 --><li><a href="{% get_gplus_share_url url=comment_url %}" target="_blank"><i class="fa fa-google-plus"></i></a></li><!--
-											 --><li><a href="{% get_email_share_url url=comment_url title=topic.title %}" ><i class="fa fa-envelope"></i></a></li>
-											</ul>
-										{% endwith %}
-									</div>
-								</div>
 							
 						</div>
 						{% endif %}
@@ -95,10 +78,7 @@
 
 					{% else %}
 					<div class="media">
-						<img src="{% get_gravatar_url user=c.user size=50 %}" />
-						<span class="label label-danger">
-							<a href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
-						</span>
+						<img src="{% get_gravatar_url user=c.user size=50 %}" />	
 
 						{% if c.dual == 'DISAGREE' %}
 							<span class="label label-danger">{{c.dual}}</span>
@@ -107,7 +87,8 @@
 						{% endif %}
 					</div>
 					<div class="info-container">
-						<div class="post-user"><a href="#">Radomit Grigor</a> <small>SAYS</small></div>
+						<a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
+						<small>{{ c.user.get_full_name }}</small>
 						<div class="post-content">
 							{% if user.st.is_moderator %}
 								{{ c.comment_html|safe }}
@@ -176,8 +157,6 @@
 									<a  class="adminst" href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
 								{% endif %}
 							
-
-								<a  class="js-share adminst" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a>
 							
 								{% if user.is_authenticated %}
 									{% if c.like %}
@@ -196,24 +175,9 @@
 
 									{% ifnotequal c.user.pk user.pk %}
 										<a class="adminst" href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
-										<a class="adminst" href="#reply" >{% trans "reply" %}</a>
 									{% endifnotequal %}
 								{% endif %}
 							
-								<div class="share adminst js-share-{{ c.pk }}" style="display: none;">
-									<div class="share-box">
-										<a class="share-close" href="#" ><i class="fa fa-times"></i> {% trans "close" %}</a>
-										{% with comment_url=c.get_absolute_url %}
-											<input class="share-url" type="text" value="{% get_share_url url=comment_url %}" />
-											<ul class="share-actions">
-												<li><a href="{% get_twitter_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-twitter"></i></a></li><!--
-											 --><li><a href="{% get_facebook_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-facebook"></i></a></li><!--
-											 --><li><a href="{% get_gplus_share_url url=comment_url %}" target="_blank"><i class="fa fa-google-plus"></i></a></li><!--
-											 --><li><a href="{% get_email_share_url url=comment_url title=topic.title %}" ><i class="fa fa-envelope"></i></a></li>
-											</ul>
-										{% endwith %}
-									</div>
-								</div>
 						</div>
 						{% endif %}
 					</div>
@@ -221,10 +185,6 @@
 					{% else %}
 					<div class="media">
 						<img src="{% get_gravatar_url user=c.user size=50 %}" />
-						<span class="label label-danger">
-							<a href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
-						</span>
-
 						{% if c.dual == 'DISAGREE' %}
 							<span class="label label-danger">{{c.dual}}</span>
 						{% elif c.dual == 'AGREE' %} 
@@ -232,7 +192,8 @@
 						{% endif %}
 					</div>
 					<div class="info-container">
-						<div class="post-user"><a href="#">Radomit Grigor</a> <small>SAYS</small></div>
+						<a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
+							<small>{{ c.user.get_full_name }}</small>
 						<div class="post-content">
 							{% if user.st.is_moderator %}
 								{{ c.comment_html|safe }}
@@ -266,7 +227,5 @@
 				removeLikeText: '{% trans "remove like" %} ({count})',
 			} );
 		{% endif %}
-		$('.js-share').social_share();
-		hljs.initHighlightingOnLoad();
 	});
 	</script>

@@ -15,7 +15,7 @@ import spirit.comment.urls
 
 patterns = [
     url(r'^$', spirit.topic.views.index_active, name='index'),
-    url(r'^st/admin/', include(spirit.admin.urls, namespace='admin')),
+    url(r'^admin/', include(spirit.admin.urls, namespace='admin')),
     url(r'^usuario/', include(spirit.user.urls, namespace='user')),
     url(r'^buscar/', include(spirit.search.urls, namespace='search')),
     url(r'^categoria/', include(spirit.category.urls, namespace='category')),

@@ -2,14 +2,33 @@
 
 {% include "spirit/comment/flag/admin/_tabs.html" with active_tab=active_tab %}
 
-<div class="rows">
 
-    {% for f in flags %}
-        <div class="row">
-            <a href="{{ f.comment.get_absolute_url }}">{{ f.comment.topic.title }}</a> <a class="row-edit" href="{% url "spirit:admin:flag:detail" pk=f.pk %}"><i class="fa fa-cog"></i> {% trans "moderate" %}</a>
-        </div>
-    {% endfor %}
-
+<div class="panel panel-inverse" data-sortable-id="table-basic-7">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>#cat</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				{% for f in flags %}
+				<tbody>
+					<td>
+						<a href="{{ f.comment.get_absolute_url }}" target="_blank">{{ f.comment.topic.title }}</a>
+					</td>
+					<td>
+						<a class="row-edit" href="{% url "spirit:admin:flag:detail" pk=f.pk %}">
+							<i class="fa fa-cog"></i> {% trans "moderate" %}
+						</a>
+					</td>{% endfor %}
+				</tbody>
+				
+			</table>
+		</div>
+	</div>
 </div>
+
 
 {% render_paginator flags %}

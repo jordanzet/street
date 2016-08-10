@@ -10,7 +10,7 @@
 
 <div id="content" class="content">
 	<ol class="breadcrumb pull-right">
-		<li><a href="javascript:;">Home</a></li>
+		<li><a href="#">Inicio</a></li>
 		<li class="active">{% trans "Dashboard" %}</li>
 	</ol>
 	<h1 class="page-header">{% trans "Dashboard" %} <small> {% trans "Statistics" %}</small></h1>
@@ -23,7 +23,7 @@
 					<p>{{ users_count }}</p>
 				</div>
 				<div class="stats-link">
-					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+					<a href="{% url "spirit:admin:user:index" %}">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
 				</div>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 					<p>{{ topics_count }}</p>
 				</div>
 				<div class="stats-link">
-					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+					<a href="{% url "spirit:admin:topic:index" %}">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 					<p>{{ comments_count }}</p>
 				</div>
 				<div class="stats-link">
-					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+					<a href="#">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 					<p>{{ likes_count }}</p>
 				</div>
 				<div class="stats-link">
-					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+					<a href="#">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
 				</div>
 			</div>
 		</div>
@@ -71,7 +71,7 @@
 					<p>{{ flags_count }}</p>
 				</div>
 				<div class="stats-link">
-					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+					<a href="{% url "spirit:admin:flag:index" %}">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
 				</div>
 			</div>
 		</div>
@@ -83,7 +83,7 @@
 					<p>{{ category_count }}</p>
 				</div>
 				<div class="stats-link">
-					<a href="javascript:;">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
+					<a href="{% url "spirit:admin:category:index" %}">Ver detalles <i class="fa fa-arrow-circle-o-right"></i></a>
 				</div>
 			</div>
 		</div>

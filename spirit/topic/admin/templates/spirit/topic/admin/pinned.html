@@ -11,10 +11,83 @@
 <div id="content" class="content">
 	<div class="row">
 		<div class="col-md-12">
-	<h1 class="headline">{% trans "Pinned topics" %}</h1>
-	{% include "spirit/topic/admin/_tabs.html" with active_tab="pinned" %}
-	{% include "spirit/topic/_render_list.html" %}
-	{% render_paginator topics %}
+			{% include "spirit/topic/admin/_tabs.html" with active_tab="pinned" %}
+			<div class="panel panel-inverse" data-sortable-id="table-basic-7">
+				<div class="panel-heading">
+					<h4 class="panel-title">{% trans "Pinned topics" %}</h4> </div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Usuario</th>
+									<th>Categoria</th>
+									<th>Titulo</th>
+									<th>Slug</th>
+									<th># vistas</th>
+									<th># comentarios <i class="fa fa-comment"></i></th>
+									<th>Ultima actividad</th>
+									<th>Estado</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for t in topics %}
+								<tr>
+									<td>{{t.id}}</td>
+									<td>{{t.user}}</td>
+									<td>
+										{% if show_subcategory %}
+											<a {% if t.category.color %}style="color: {{ t.category.color }};"{% endif %} href="{{ t.category.get_absolute_url }}">
+												{{ t.category.title }}
+											</a>
+										{% else %}
+											{% if t.category.parent %}
+												<a {% if t.category.parent.color %}style="color: {{ t.category.parent.color }};"{% endif %} href="{{ t.category.parent.get_absolute_url }}">
+													{{ t.category.parent.title }}
+												</a>
+											{% else %}
+												<a {% if t.category.color %}style="color: {{ t.category.color }};"{% endif %} href="{{ t.category.get_absolute_url }}">
+													{{ t.category.title }}
+												</a>
+											{% endif %}
+										{% endif %}
+									</td>
+									<td><a class="row-link{% if t.is_visited %} is-visited{% endif %}" href="{{ t.get_bookmark_url }}">{{ t.title }}</a></td>
+									<td>{{t.slug}}</td>
+									<td>{{t.view_count}}</td>
+									<td>{{t.comment_count}}</td>
+
+								
+									
+									<td>
+										<div class="time" title="{{ t.last_active }}">
+											<i class="fa fa-clock-o"></i> {{ t.last_active|shortnaturaltime }}
+										</div>
+									</td>
+								
+
+									<td>
+										{% if t.is_pinned or t.is_globally_pinned %}
+											pin <i class="fa fa-thumb-tack"></i>
+										{% endif %} 
+
+										{% if t.is_closed %}
+											<i class="fa fa-lock"></i>
+										{% endif %}
+										{% if t.is_removed %}
+											removido :(
+										{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			{% render_paginator topics %}
 		</div>
 	</div>
 </div>

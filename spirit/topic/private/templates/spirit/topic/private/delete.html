@@ -5,12 +5,20 @@
 {% block title %}{% trans "Remove user from private topic" %}{% endblock %}
 
 {% block content %}
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
 
-    <h1 class="headline">{% blocktrans trimmed with username=topic_private.user.username topic_title=topic_private.topic.title %}Removing {{ username }}'s from {{ topic_title }}{% endblocktrans %}</h1>
+			<h1 class="headline">{% blocktrans trimmed with username=topic_private.user.username topic_title=topic_private.topic.title %}Removing {{ username }}'s from {{ topic_title }}{% endblocktrans %}</h1>
 
-    <form action="." method="post">{% csrf_token %}
-        {% include "spirit/_form.html" %}
-        <input class="button" type="submit" name="post" value="{% trans "Remove" %}" />
-    </form>
+			<form action="." method="post">{% csrf_token %}
+				{% include "spirit/_form.html" %}
+				<input class="button" type="submit" name="post" value="{% trans "Remove" %}" />
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

@@ -6,10 +6,15 @@
 
 {% block content %}
 
-    {% include "spirit/topic/private/_top_bar.html" with active="participating" %}
-
-    {% include "spirit/topic/_render_list.html" %}
-
-    {% render_paginator topics %}
-
+{% include "spirit/topic/private/_top_bar.html" with active="participating" %}
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+		    	{% include "spirit/topic/_render_list.html" %}
+		    	{% render_paginator topics %}
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

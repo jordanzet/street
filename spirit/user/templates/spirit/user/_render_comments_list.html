@@ -1,50 +1,34 @@
 {% load spirit_tags i18n %}
 
-    <div class="comments">
+<div class="panel-body">
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Imagen</th>
+					<th>Usuario</th>
+					<th>Tema</th>
+					<th>Fecha</th>
+					<th>Comentario</th>
+				</tr>
+			</thead>
+			{% for c in comments %}
+			<tbody>
+				<td><img class="comment-avatar" src="{% get_gravatar_url user=c.user size=50 %}" /></td>
+				<td><a href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a></td>
+				<td><a href="{{ c.get_absolute_url }}">{{ c.topic.title }}</a></td>
+				<td>{{ c.date|shortnaturaltime }}</td>
+				<td>{% post_render_comment comment=c %}</td>
+			</tbody>
+			{% empty %}
+				<p>{% trans "There are no comments here, yet" %}</p>
+			{% endfor %}
+		</table>
+	</div>
+</div>
 
-        {% for c in comments %}
-
-            <div class="comment">
-
-                <div class="comment-media">
-                    <div class="comment-img">
-                        <img class="comment-avatar" src="{% get_gravatar_url user=c.user size=50 %}" />
-                    </div>
-
-                    <div class="comment-body">
-                        <div class="comment-info">
-
-                            <div class="comment-username">
-                                <a href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
-                            </div>
-
-                            <ul class="comment-date">
-                                <li><a href="{{ c.get_absolute_url }}"><i class="fa fa-comments"></i> {{ c.topic.title }}</a></li><!--
-			                 --><li title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
-                            </ul>
-
-                        </div>
-
-                        <div class="comment-text">
-                            {% post_render_comment comment=c %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        {% empty %}
-            <p>{% trans "There are no comments here, yet" %}</p>
-        {% endfor %}
-
-    </div>
-
-
-    <script>
-
+	<script>
 	$( document ).ready(function() {
-
-        hljs.initHighlightingOnLoad();
-
+		hljs.initHighlightingOnLoad();
 	});
-
 	</script>

@@ -1,16 +1,16 @@
 {% load i18n %}
 
 <ul class="tabs nav nav-tabs">
-	<li>
+	<li class="{% ifequal active_tab "list" %}active{% endifequal %}">
 		<a class="tab-link{% ifequal active_tab "list" %} is-selected{% endifequal %}" href="{% url "spirit:admin:user:index" %}" >{% trans "List" %}</a>
 	</li>
-	<li>
+	<li class="{% ifequal active_tab "admins" %}active{% endifequal %}">
 		<a class="tab-link{% ifequal active_tab "admins" %} is-selected{% endifequal %}" href="{% url "spirit:admin:user:index-admins" %}" >{% trans "Admins" %}</a>
 	</li>
-	<li>
+	<li class="{% ifequal active_tab "mods" %}active{% endifequal %}">
  		<a class="tab-link{% ifequal active_tab "mods" %} is-selected{% endifequal %}" href="{% url "spirit:admin:user:index-mods" %}" >{% trans "Mods" %}</a>
  	</li>
- 	<li>
+ 	<li class="{% ifequal active_tab "unactive" %}active{% endifequal %}">
  		<a class="tab-link{% ifequal active_tab "unactive" %} is-selected{% endifequal %}" href="{% url "spirit:admin:user:index-unactive" %}" >{% trans "Unactive" %}</a>
  	</li>
 </ul>

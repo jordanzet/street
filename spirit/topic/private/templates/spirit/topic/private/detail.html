@@ -1,74 +1,72 @@
 {% extends "spirit/_base.html" %}
-
+{% load static from staticfiles %}
 {% load spirit_tags i18n %}
 
 {% block title %}{{ topic.title }}{% endblock %}
 
 {% block content %}
-
-        <ul class="nav">
-            <li><a href="{% url "spirit:topic:private:index" %}" >{% trans "Private topics" %}</a></li>
-        </ul>
-
-        <h1 class="headline">{{ topic.title }}</h1>
-
+    <div class="search-banner has-bg">
+        <div class="bg-cover">
+            <img src="{% static "spirit/forum/img/cover.jpg" %}" alt="" />
+        </div>
         <div class="container">
-            <div class="private-participants js-tabs-container">
-                <a class="dropdown-button js-tab" href="#" data-related=".js-participants-content">{% trans "Participants" %} <i class="fa fa-chevron-down"></i></a>
+            <h1><a href="{% url "spirit:topic:private:index" %}" >{% trans "Private topics" %}</a></h1>
+            <h5>{% trans "Participants" %}</h5>
+            <ul class="popular-tags">
+            	{% for tp in topic.topics_private.all %}
+				<li>
+					{% ifequal user.pk topic.user.pk %}
+						<a href="{% url "spirit:topic:private:access-remove" tp.pk %}" ><i class="fa fa-times fa-3"></i> {{ tp.user.username }}</a>
+					{% endifequal %}
+				</li>
+				{% endfor %}
+				<li>
+					<a style="background:purple;" href="{% url "spirit:topic:private:access-remove" topic_private.pk %}" ><i class="fa fa-times"></i>{% trans "Leave topic" %}</a>
+				</li>
 
-                <div class="tab-content js-tab-content js-participants-content">
-                    <ul class="participants-menu">
-                        {% for tp in topic.topics_private.all %}
-                            <li class="menu-item"><span class="menu-username">{{ tp.user.username }}</span>{% ifequal user.pk topic.user.pk %}<a class="menu-icon" href="{% url "spirit:topic:private:access-remove" tp.pk %}" ><i class="fa fa-times"></i></a>{% endifequal %}</li>
-                        {% endfor %}
-                    </ul>
-
-                    {% ifequal user.pk topic.user.pk %}
-                        {% render_invite_form topic %}
-                    {% endifequal %}
-                </div>
+            </ul> <br>
+            <div class="well col-md-offset-3 col-md-6">
+            	{% ifequal user.pk topic.user.pk %}
+					{% render_invite_form topic %}
+				{% endifequal %}
             </div>
-
-            <div class="private-leave">
-                <a class="button" href="{% url "spirit:topic:private:access-remove" topic_private.pk %}" ><i class="fa fa-times"></i>{% trans "Leave topic" %}</a>
-            </div>
+           
         </div>
+    </div>
 
-        {% include "spirit/comment/_render_list.html" %}
+<div class="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="headline">{{ topic.title }}</h1>
+				{% include "spirit/comment/_render_list.html" %}
+				{# this can be *included* here and in topic_detail #}
+		
+				<div class="col-md-offset-9 col-md-3">
+					{% render_paginator comments %}
+					{% render_notification_form user=user topic=topic %}
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-1">
+					<img class="comment-avatar" src="{% get_gravatar_url user=user size=50 %}" />
+				</div>
+				<div class="col-md-11">
+					{% render_comments_form topic=topic %}
+				</div>
+				<script>
+					$( document ).ready(function() {
+						$( ".comment" ).bookmark( {
+							csrfToken: "{{ csrf_token }}",
+							target: "{% url "spirit:comment:bookmark:create" topic.pk %}",
+						} );
 
-        {# this can be *included* here and in topic_detail #}
-        <div class="container">
-            {% render_paginator comments %}
-
-            <div class="notify">
-                {% render_notification_form user=user topic=topic %}
-            </div>
-        </div>
-
-        <div id="reply" class="reply">
-
-            <div class="comment-media">
-                <div class="comment-img">
-                    <img class="comment-avatar" src="{% get_gravatar_url user=user size=50 %}" />
-                </div>
-
-                <div class="comment-body">
-                    {% render_comments_form topic=topic %}
-                </div>
-            </div>
-
-        </div>
-
-            <script>
-                $( document ).ready(function() {
-
-                    $( ".comment" ).bookmark( {
-                        csrfToken: "{{ csrf_token }}",
-                        target: "{% url "spirit:comment:bookmark:create" topic.pk %}",
-                    } );
-
-                });
-            </script>
-
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+ 
 
 {% endblock %}

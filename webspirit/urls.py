@@ -16,7 +16,7 @@ admin.site.login = login_required(admin.site.login)
 
 
 urlpatterns = [
-	url(r'^admin/', include(admin.site.urls)),
+	url(r'^admindjango/', include(admin.site.urls)),
 	url(r'^', include(spirit.urls)),
 	#url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, }),
 ]

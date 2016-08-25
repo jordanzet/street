@@ -14,11 +14,7 @@
 					{% if not c.is_removed %}
 					<div class="media">
 						<img src="{% get_gravatar_url user=c.user size=50 %}" alt=""/>
-						{% if c.dual == 'DISAGREE' %}
-							<span class="label label-danger">{{c.dual}}</span>
-						{% elif c.dual == 'AGREE' %} 
-							<span class="label label-primary">{{c.dual}}</span>
-						{% endif %}
+						
 					</div>
 					<div class="info-container">
 						<div class="post-user">
@@ -50,19 +46,23 @@
 
 									<a class="adminst" href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
 								{% endif %}
-							
 
 								{% if user.is_authenticated %}
 									{% if c.like %}
-										<a class="js-like adminst" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a>
+										<a class="js-like adminst" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i>{% trans "remove like" %} ({{ c.likes_count }})</a>
 									{% else %}
 										{% ifnotequal c.user user  %}
-											<a class="js-like adminst" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a>
+											<a class="js-like adminst" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i>{% trans "like" %} ({{ c.likes_count }})</a>
 										{% else %}
-											<i class="fa fa-heart"></i> ({{ c.likes_count }})
+											<i class="fa fa-heart"></i>({{ c.likes_count }})
 										{% endifnotequal %}
 									{% endif %}
+								{% else %}
+								<i class="fa fa-heart"></i> ({{ c.likes_count }})
+								{% endif %}
 
+
+								{% if user.is_authenticated %}
 									{% if user.st.is_moderator or c.user.pk == user.pk %}
 										<a class="adminst" href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
 									{% endif %}
@@ -78,13 +78,7 @@
 
 					{% else %}
 					<div class="media">
-						<img src="{% get_gravatar_url user=c.user size=50 %}" />	
-
-						{% if c.dual == 'DISAGREE' %}
-							<span class="label label-danger">{{c.dual}}</span>
-						{% elif c.dual == 'AGREE' %} 
-							<span class="label label-primary">{{c.dual}}</span>
-						{% endif %}
+						<img src="{% get_gravatar_url user=c.user size=50 %}" />
 					</div>
 					<div class="info-container">
 						<a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
@@ -111,7 +105,7 @@
 
 	<div class="col-md-6">
 		<div class="comment-banner-msg">
-			Comentarios en desacuerdo.
+			Comentarios en contra.
 		</div>
 		<ul class="forum-list forum-detail-list">
 			{% for c in commentsdesagree %}
@@ -120,11 +114,6 @@
 					{% if not c.is_removed %}
 					<div class="media">
 						<img src="{% get_gravatar_url user=c.user size=50 %}" alt=""/>
-						{% if c.dual == 'DISAGREE' %}
-							<span class="label label-danger">{{c.dual}}</span>
-						{% elif c.dual == 'AGREE' %} 
-							<span class="label label-primary">{{c.dual}}</span>
-						{% endif %}
 					</div>
 					<div class="info-container">
 						<div class="post-user">
@@ -156,19 +145,22 @@
 
 									<a  class="adminst" href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a>
 								{% endif %}
-							
-							
+
 								{% if user.is_authenticated %}
 									{% if c.like %}
-										<a class="js-like adminst" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a>
+										<a class="js-like adminst" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i>{% trans "remove like" %} ({{ c.likes_count }})</a>
 									{% else %}
 										{% ifnotequal c.user user  %}
-											<a class="js-like adminst" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a>
+											<a class="js-like adminst" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i>{% trans "like" %} ({{ c.likes_count }})</a>
 										{% else %}
-											<i class="fa fa-heart"></i> ({{ c.likes_count }})
+											<i class="fa fa-heart"></i>({{ c.likes_count }})
 										{% endifnotequal %}
 									{% endif %}
-
+								{% else %}
+								<i class="fa fa-heart"></i> ({{ c.likes_count }})
+								{% endif %}
+							
+								{% if user.is_authenticated %}
 									{% if user.st.is_moderator or c.user.pk == user.pk %}
 										<a class="adminst" href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
 									{% endif %}
@@ -185,11 +177,6 @@
 					{% else %}
 					<div class="media">
 						<img src="{% get_gravatar_url user=c.user size=50 %}" />
-						{% if c.dual == 'DISAGREE' %}
-							<span class="label label-danger">{{c.dual}}</span>
-						{% elif c.dual == 'AGREE' %} 
-							<span class="label label-primary">{{c.dual}}</span>
-						{% endif %}
 					</div>
 					<div class="info-container">
 						<a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>

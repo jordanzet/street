@@ -162,7 +162,7 @@ a:focus, a:hover {
 	color:#fff
 }
 .content {
-	padding:30px 0 60px
+	padding:30px 0 10px
 }
 .has-bg, .has-bg .container {
 	position:relative;
@@ -374,7 +374,7 @@ a:focus, a:hover {
 	font-weight:600
 }
 .forum-list.forum-detail-list {
-	max-height: 500px;
+	max-height: 800px;
 	margin-bottom:20px;
 	overflow: auto;
 	padding: 10px;
@@ -2703,4 +2703,11 @@ a.list-group-item.active, a.list-group-item.active:focus, a.list-group-item.acti
 .adminst{
 	color: orange;
 	margin: 0 5px;
+}
+
+
+
+.notify{
+	margin:40px;
+	padding: 20px;
 }

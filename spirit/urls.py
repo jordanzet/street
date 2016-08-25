@@ -19,7 +19,7 @@ patterns = [
     url(r'^usuario/', include(spirit.user.urls, namespace='user')),
     url(r'^buscar/', include(spirit.search.urls, namespace='search')),
     url(r'^categoria/', include(spirit.category.urls, namespace='category')),
-    url(r'^tema/', include(spirit.topic.urls, namespace='topic')),
+    url(r'^pregunta/', include(spirit.topic.urls, namespace='topic')),
     url(r'^comentario/', include(spirit.comment.urls, namespace='comment')),
 ]
 

@@ -2,33 +2,32 @@
 {% load static from staticfiles %}
 
 <div class="search-banner has-bg">
-    <div class="bg-cover">
-        <img src="{% static "spirit/forum/img/cover.jpg" %}" alt="" />
-    </div>
-    {% if category %}
-        <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{{ category.title }} <i class="fa fa-chevron-down"></i></a>
-    {% else %}
-        <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{% trans "All Categories" %} <i class="fa fa-chevron-down"></i></a>
-    {% endif %}
+	<div class="bg-cover">
+		<img src="{% static "spirit/forum/img/cover.jpg" %}" alt="" />
+	</div>
+	{% if category %}
+		<a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{{ category.title }} <i class="fa fa-chevron-down"></i></a>
+	{% else %}
+		<a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{% trans "All Categories" %} <i class="fa fa-chevron-down"></i></a>
+	{% endif %}
 
-    <div class="container">
-        <h1>Temas Privados</h1>
-        <h5>
-            {% ifequal active "participating" %}
-                {% trans "Participating in" %}
-            {% else %}
-                {% trans "Left" %}
-            {% endifequal %}
-        </h5>
-        <ul class="popular-tags">
-            <li><a href="{% url "spirit:topic:private:index-author" %}" >{% trans "Left" %}</a></li>
-            <li><a href="{% url "spirit:topic:private:index" %}" >{% trans "Participating in" %}</a></li>
-
-        </ul>
-    </div>
-    <div class="col-md-12">
-        <div class="new-topic" style="text-align: center; margin: 18px; font-weight: 700; font-size: initial;">
-            <a class="button" href="{% url "spirit:topic:private:publish" %}">{% trans "Create private topic" %}</a>
-        </div>
-    </div>
+	<div class="container">
+		<h1>{{topics_count}} Temas Privados</h1>
+		<h5>
+			{% ifequal active "participating" %}
+				{% trans "Participating in" %}
+			{% else %}
+				{% trans "Left" %}
+			{% endifequal %}
+		</h5>
+		<ul class="popular-tags">
+			<li><a href="{% url "spirit:topic:private:index-author" %}" >{% trans "Left" %}</a></li>
+			<li><a href="{% url "spirit:topic:private:index" %}" >{% trans "Participating in" %}</a></li>
+		</ul>
+	</div>
+	<div class="col-md-12">
+		<div class="new-topic" style="text-align: center; margin: 18px; font-weight: 700; font-size: initial;">
+			<a class="button" href="{% url "spirit:topic:private:publish" %}">{% trans "Create private topic" %}</a>
+		</div>
+	</div>
 </div>

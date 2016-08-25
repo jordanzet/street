@@ -105,6 +105,7 @@
 
 
 		<div class="container">
+		<div class="row">
 		<!--	{% render_paginator page=comments %}-->
 			<div class="notify">
 				{% if user.is_authenticated %}
@@ -113,9 +114,10 @@
 					</div><br>				
 					
 				{% elif not topic.is_closed %}
-					<a class="button" href="{% url "spirit:comment:publish" topic_id=topic.pk %}">{% trans "Reply" %}</a>
+					<a class="button" href="{% url "spirit:comment:publish" topic_id=topic.pk %}">xd {% trans "Reply" %}</a>
 				{% endif %}
 			</div>
+		</div>
 		</div>
 
 	{% if user.is_authenticated %}

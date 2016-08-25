@@ -182,7 +182,10 @@ def index(request):
         page_number=request.GET.get('page', 1)
     )
 
-    context = {'topics': topics, }
+    context = {
+        'topics': topics,
+        'topics_count': Topic.objects.filter(topics_private__user=request.user).all().count(),
+    }
 
     return render(request, 'spirit/topic/private/index.html', context)
 

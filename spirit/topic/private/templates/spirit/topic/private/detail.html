@@ -16,7 +16,10 @@
             	{% for tp in topic.topics_private.all %}
 				<li>
 					{% ifequal user.pk topic.user.pk %}
-						<a href="{% url "spirit:topic:private:access-remove" tp.pk %}" ><i class="fa fa-times fa-3"></i> {{ tp.user.username }}</a>
+						<a href="{% url "spirit:topic:private:access-remove" tp.pk %}" >
+							<i class="fa fa-times fa-3x" aria-hidden="true"></i> 
+							{{ tp.user.username }}
+						</a>
 					{% endifequal %}
 				</li>
 				{% endfor %}

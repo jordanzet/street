@@ -5,19 +5,12 @@
 	<ul class="forum-list forum-topic-list">
 		{% for t in topics %}
 		<li>
-			<div class="media">
-				<img src="{% static "spirit/forum/img/user-2.jpg" %}" alt="" />
-			</div>
 			<div class="info-container">
 				<div class="info">
 					<h4 class="title">
 						<a class="row-link{% if t.is_visited %} is-visited{% endif %}" href="{{ t.get_bookmark_url }}">{{ t.title }}</a>
 						{% if t.is_pinned or t.is_globally_pinned %}
 							<i class="fa fa-thumb-tack"></i>
-						{% endif %}
-
-						{% if t.is_closed %}
-							<i class="fa fa-lock"></i>
 						{% endif %}
 					</h4>
 					<ul class="info-start-end">
@@ -38,19 +31,28 @@
 								{% endif %}
 							{% endif %}
 						</li>
+						<li>
+						publicado: <i class="fa fa-clock-o"></i> {{ t.last_active|shortnaturaltime }}
+						</li>
+
+
 						<!--<li>latest reply <a href="detail.html">Raphael Afzal</a></li>-->
 					</ul>
 				</div>
 				<div class="date-replies">
-					<div class="time" title="{{ t.last_active }}">
-						<i class="fa fa-clock-o"></i> {{ t.last_active|shortnaturaltime }}
-					</div>
+					{% if t.is_closed %}
+						<div style="color:red; font-size:14px; font-weight:700;margin-bottom:5px;">
+							<i class="fa fa-lock fa-2x"></i> Cerrado
+						</div>
+					{% else %}
+						<div style="color:green; font-size:14px; font-weight:700;margin-bottom:5px;">
+							Abierto
+						</div>
+					{% endif %}
 					<div class="replies">
 						<div class="total">
-							<i class="fa fa-comment{% if t.has_new_comments %} js-comment-is-new{% endif %}"></i> 
-							{{ t.comment_count }}
+							<i class="fa fa-comment{% if t.has_new_comments %} js-comment-is-new{% endif %}"></i> {{ t.comment_count }} Comentarios
 						</div>
-						<div class="text">Comentarios</div>
 					</div>
 				</div>
 			</div>

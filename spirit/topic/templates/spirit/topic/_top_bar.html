@@ -6,15 +6,16 @@
 	<div class="bg-cover">
 		<img src="{% static "spirit/forum/img/cover.jpg" %}" alt="" />
 	</div>
-	{% if category %}
-		<a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{{ category.title }} <i class="fa fa-chevron-down"></i></a>
-	{% else %}
-		<a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{% trans "All Categories" %} <i class="fa fa-chevron-down"></i></a>
-	{% endif %}
 
 	<div class="container">
-		<h1>1,293 Post for discussion</h1>
-		<h5>Browse by Popular Categories</h5>
+		<h1>{{ topics_count }} Preguntas en total</h1>
+
+		{% if category %}
+			<h5>{{ category.title }} <i class="fa fa-chevron-down"></i> </h5>
+		{% else %}
+			<h5>Todas las categorias </h5>
+		{% endif %}
+		
 		<ul class="popular-tags">
 			{% for c in categories %}
 				<li><a href="{{ c.get_absolute_url }}"><i class="fa fa-circle"></i> {{ c.title }}</a></li>
@@ -29,14 +30,20 @@
 
 		</ul>
 	</div>
+	{% if user.st.is_administrator %}
 	<div class="col-md-12">
-		<div class="new-topic" style="text-align: center; margin: 18px; font-weight: 700; font-size: initial;">
+		<div class="new-topic" style="text-align: center; margin: 18px; font-weight: 700; font-size: initial;">				
 			{% if category %}
-				<a class="button" style="background: white; padding:5px 10px;border-radius:.6em;text-decoration:none;" href="{% url "spirit:topic:publish" category.pk %}">Hacer Pregunta</a>
+				<a class="button" style="background: white; padding:5px 10px;border-radius:.6em;text-decoration:none;" href="{% url "spirit:topic:publish" category.pk %}">
+					<i class="fa fa-plus" aria-hidden="true"></i> Hacer una pregunta para {{category.title}}
+				</a>
 			{% else %}
-				<a class="button" style="background: white; padding:5px 10px;border-radius:.6em;text-decoration:none;" href="{% url "spirit:topic:publish" %}">Hacer Pregunta</a>
+				<a class="button" style="background: white; padding:5px 10px;border-radius:.6em;text-decoration:none;" href="{% url "spirit:topic:publish" %}">
+					<i class="fa fa-plus" aria-hidden="true"></i> Hacer una pregunta
+				</a>
 			{% endif %}
 		</div>
 	</div>
+	{% endif %}
 </div>
 

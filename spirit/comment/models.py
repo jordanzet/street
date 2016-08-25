@@ -31,7 +31,7 @@ class Comment(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='st_comments')
 	topic = models.ForeignKey('spirit_topic.Topic')
 	comment = models.TextField(_("comment"))
-	dual = models.CharField(choices= DUAL, max_length=12)
+	dual = models.CharField(choices= DUAL, max_length=12, default='mechupaunhuevo')
 	comment_html = models.TextField(_("comment html"))
 	action = models.IntegerField(_("action"), choices=ACTION, default=COMMENT)
 	date = models.DateTimeField(default=timezone.now)

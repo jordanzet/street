@@ -36,10 +36,11 @@ def detail(request, pk, slug):
 		page_number=request.GET.get('page', 1)
 	)
 
-	context = {
+	context = { 
 		'category': category,
 		'subcategories': subcategories,
-		'topics': topics
+		'topics': topics,
+		'topics_count': Topic.objects.filter(category=category,is_removed=False).all().count(),
 	}
 
 	return render(request, 'spirit/category/detail.html', context)

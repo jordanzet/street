@@ -32,9 +32,10 @@ def publish(request, category_id=None):
 
 	if request.method == 'POST':
 		form = TopicForm(user=user, data=request.POST)
-		cform = CommentForm(user=user, data=request.POST)
+		#cform = CommentForm(user=user, data=request.POST)
 
-		if (all([form.is_valid(), cform.is_valid()]) and
+		#if (all([form.is_valid(), cform.is_valid()]) and
+		if (all([form.is_valid()]) and
 				not request.is_limited()):
 			if not user.st.update_post_hash(form.get_topic_hash()):
 				return redirect(
@@ -43,17 +44,18 @@ def publish(request, category_id=None):
 
 			# wrap in transaction.atomic?
 			topic = form.save()
-			cform.topic = topic
-			comment = cform.save()
-			comment_posted(comment=comment, mentions=cform.mentions)
+			#cform.topic = topic
+			#comment = cform.save()
+			#comment_posted(comment=comment, mentions=cform.mentions)
 			return redirect(topic.get_absolute_url())
 	else:
 		form = TopicForm(user=user, initial={'category': category_id})
-		cform = CommentForm()
+		#cform = CommentForm()
 
 	context = {
 		'form': form,
-		'cform': cform}
+		#'cform': cform
+	}
 
 	return render(request, 'spirit/topic/publish.html', context)
 
@@ -143,7 +145,8 @@ def index_active(request):
 
 	context = {
 		'categories': categories,
-		'topics': topics
+		'topics': topics,
+		'topics_count': Topic.objects.all().count(),
 	}
 
 	return render(request, 'spirit/topic/active.html', context)

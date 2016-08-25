@@ -86,7 +86,7 @@ a:focus, a:hover {
 	line-height:20px
 }
 .search-banner {
-	padding:60px 0
+	padding:25px 0 80px 0;
 }
 .search-banner h1 {
 	color:#fff;
@@ -258,7 +258,7 @@ a:focus, a:hover {
 	background:#00acac
 }
 .forum-list .info-container {
-	margin-left:79px;
+	margin-left:10px;
 	padding-top:5px
 }
 .forum-list .info-container>div {
@@ -317,14 +317,14 @@ a:focus, a:hover {
 .forum-list.forum-topic-list .info-container .info {
 	width:auto;
 	float:none;
-	padding-right:100px
+	padding-right:150px
 }
 .forum-list.forum-topic-list .info-container .date-replies {
 	position:absolute;
 	right:0;
 	top:5px;
 	text-align:center;
-	width:80px
+	width:140px;
 }
 .forum-list.forum-topic-list .info-container .date-replies .time {
 	font-size:11px;
@@ -337,7 +337,7 @@ a:focus, a:hover {
 	border-radius:4px
 }
 .forum-list.forum-topic-list .info-container .date-replies .replies .total {
-	font-size:16px;
+	font-size:13px;
 	color:#242a30;
 	line-height:18px;
 	margin-bottom:2px

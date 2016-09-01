@@ -11,7 +11,7 @@ import spirit.search.urls
 import spirit.category.urls
 import spirit.topic.urls
 import spirit.comment.urls
-
+import spirit.user.auth.urls
 
 patterns = [
     url(r'^$', spirit.topic.views.index_active, name='index'),
@@ -21,6 +21,7 @@ patterns = [
     url(r'^categoria/', include(spirit.category.urls, namespace='category')),
     url(r'^pregunta/', include(spirit.topic.urls, namespace='topic')),
     url(r'^comentario/', include(spirit.comment.urls, namespace='comment')),
+    url(r'^', include(spirit.user.auth.urls, namespace='auth')),
 ]
 
 

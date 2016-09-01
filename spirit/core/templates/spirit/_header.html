@@ -74,14 +74,14 @@
 							<li role="presentation"><a role="menuitem" tabindex="-6" href="{% url "spirit:admin:index" %}">Admin</a></li>
 							{% endif %}
 
-							<li role="presentation"><a role="menuitem" tabindex="-7" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">Cerrar Sesión</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-7" href="{% url "spirit:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">Cerrar Sesión</a></li>
 						</ul>
 					</li>
 				</ul>
 			{% else %}
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="{% url "spirit:user:auth:register" %}?next={% firstof request.get_full_path|urlencode '/' %}">Crear una Cuenta</a></li>
-					<li><a href="{% url "spirit:user:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">Iniciar Sesión</a></li>
+					<li><a href="{% url "spirit:auth:register" %}?next={% firstof request.get_full_path|urlencode '/' %}">Crear una Cuenta</a></li>
+					<li><a href="{% url "spirit:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">Iniciar Sesión</a></li>
 				</ul>
 			{% endif %}
 		</div>

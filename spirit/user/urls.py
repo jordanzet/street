@@ -4,12 +4,13 @@ from __future__ import unicode_literals
 
 from django.conf.urls import url, include
 
-from .auth import urls as auth_urls
+
 from . import views
 
 
 urlpatterns = [
-    url(r'^$', views.update, name='update'),
+    url(r'^$', views.index, name='index'),
+    url(r'^preferencias/$', views.update, name='update'),
     url(r'^cambiar-contraseña/$', views.password_change, name='password-change'),
     url(r'^cambiar-email/$', views.email_change, name='email-change'),
     url(r'^cambiar-email/(?P<token>[0-9A-Za-z_\-\.]+)/$', views.email_change_confirm, name='email-change-confirm'),
@@ -25,5 +26,5 @@ urlpatterns = [
 
     url(r'^menu/$', views.menu, name='menu'),
 
-    url(r'^', include(auth_urls, namespace='auth')),
+    
 ]

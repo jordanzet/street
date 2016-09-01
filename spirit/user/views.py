@@ -24,6 +24,10 @@ User = get_user_model()
 
 
 @login_required
+def index(request):
+	return redirect(reverse('spirit:index'))
+
+@login_required
 def update(request):
 	if request.method == 'POST':
 		uform = UserForm(data=request.POST, instance=request.user)

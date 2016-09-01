@@ -69,7 +69,7 @@
 					{% endif %}
 
 					<li class="divider"></li>
-					<li role="presentation"><a role="menuitem" tabindex="-7" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">Cerrar Sesión</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-7" href="{% url "spirit:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">Cerrar Sesión</a></li>
 
 				</ul>
 			</li>

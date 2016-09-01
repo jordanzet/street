@@ -18,13 +18,16 @@ User = get_user_model()
 
 
 @ratelimit(field='username', rate='5/5m')
-# TODO: @guest_only
+# TODO: @guest_only 
 def custom_login(request, **kwargs):
 	# Currently, Django 1.5 login view does not redirect somewhere if the user is logged in
 	if request.user.is_authenticated():
+		print "abcd"
 		return redirect(request.GET.get('next', request.user.st.get_absolute_url()))
 
+
 	if request.method == "POST" and request.is_limited():
+		print "xyz"
 		return redirect(request.get_full_path())
 
 	return login_view(request, authentication_form=LoginForm, **kwargs)
@@ -34,7 +37,7 @@ def custom_login(request, **kwargs):
 def custom_logout(request, **kwargs):
 	# Currently, Django 1.6 uses GET to log out
 	if not request.user.is_authenticated():
-		return redirect(request.GET.get('next', reverse('spirit:user:auth:login')))
+		return redirect(request.GET.get('next', reverse('spirit:auth:login')))
 
 	if request.method == 'POST':
 		return logout(request, **kwargs)
@@ -45,7 +48,7 @@ def custom_logout(request, **kwargs):
 @ratelimit(field='email', rate='5/5m')
 def custom_password_reset(request, **kwargs):
 	if request.method == "POST" and request.is_limited():
-		return redirect(reverse("spirit:user:auth:password-reset"))
+		return redirect(reverse("spirit:auth:password-reset"))
 
 	return password_reset(request, **kwargs)
 
@@ -63,7 +66,7 @@ def register(request, registration_form=RegistrationForm):
 			user = form.save(commit=False)
 			user.is_active = True
 			user.save()
-			return redirect(reverse('spirit:user:auth:login'))
+			return redirect(reverse('spirit:auth:login'))
 	else:
 		form = registration_form()
 
@@ -82,7 +85,7 @@ def registration_activation(request, pk, token):
 		user.save()
 		messages.info(request, _("Your account has been activated!"))
 
-	return redirect(reverse('spirit:user:auth:login'))
+	return redirect(reverse('spirit:auth:login'))
 
 
 @ratelimit(field='email', rate='5/5m')
@@ -101,7 +104,7 @@ def resend_activation_email(request):
 		# TODO: show if is_valid only
 		messages.info(request, _("If you don't receive an email, please make sure you've entered "
 								 "the address you registered with, and check your spam folder."))
-		return redirect(reverse('spirit:user:auth:login'))
+		return redirect(reverse('spirit:auth:login'))
 	else:
 		form = ResendActivationForm()
 

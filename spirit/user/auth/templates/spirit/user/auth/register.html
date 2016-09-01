@@ -5,21 +5,13 @@
 {% block title %}{% trans "Register" %}{% endblock %}
 
 {% block head-extra %}
-	<script>
-
-	$( document ).ready(function() {
-
-		$( "input[name=honeypot]" ).hide();
-		$( "label[for=id_honeypot]" ).hide();
-
-	});
-
-	</script>
+	<style>
+		input[name=honeypot]{display: none;}
+		label[for=id_honeypot]{display: none;}
+	</style>
 {% endblock %}
 
 {% block content %}
-
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-offset-4 col-md-4">
@@ -39,11 +31,9 @@
 			</div>
 
 			<div style="margin-bottom:40px;" class="comment-banner-msg">
-			Si ya tienes una cuenta ---> <a href="{% url "spirit:user:auth:login" %}"> Iniciar Sesión</a>
+			Si ya tienes una cuenta ---> <a href="{% url "spirit:auth:login" %}"> Iniciar Sesión</a>
 			</div>
 		</div>
 	</div>
-</div> 
-
-
+</div>
 {% endblock %}

@@ -23,8 +23,8 @@ ACTION = (
 )
 
 DUAL = (
-    ('AGREE', 'de acuerdo'),
-    ('DISAGREE', 'en desacuerdo'),
+	('AGREE', 'A favor'),
+	('DISAGREE', 'En contra'),
 )
 
 class Comment(models.Model):

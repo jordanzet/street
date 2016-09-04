@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			
-			    <h1 class="headline">{% blocktrans trimmed with username=like.comment.user.username %}Remove {{ username }}'s comment like{% endblocktrans %}</h1>
+			    <h1 class="headline">{% blocktrans trimmed with username=like.comment.user.username %}Eliminar "me gusta" del comentario de {{ username }}{% endblocktrans %}</h1>
 
     <form action="." method="post">
         {% csrf_token %}
